@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-TW">
+<head>
+  <title>17 DODGE</title>
+  <meta charset="utf-8" />
+  <link type="text/css" rel="stylesheet" href="/stylesheets/index.css">
+</head>
+<body>
+  
+
+  <canvas id="game-canvas"></canvas>
+  <div id="play-menu" class="hidden">
+    <div id="play-menu-item">
+      <input type="text" id="playerName-input" placeholder="Enter Your Name" />
+      <button id="play-button">START</button>
+    </div>
+  </div>
+  <div>MY SCORES: <span id="my-scores">0</span></div>
+
+  <script src="/javascripts/globalSetting.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/javascripts/ballSetting.js"></script>
+  <script src="/javascripts/playerInfo.js"></script>
+  <script src="/javascripts/gameplay.js"></script>
+  
+</body>
+</html>
