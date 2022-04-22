@@ -70,9 +70,6 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     // 計算其他玩家和 me 的是否碰撞 有則結束遊戲
     let others = players.filter( player => player.id !== me.id); 
     others.forEach( player => gameOverP(player) );
-    
-    console.log('sin',Math.sin(1)); // 0.84
-    console.log('cos',Math.cos(1)); // 0.54
 
     // 用鍵盤操控玩家球的移動距離與限制(碰撞)
     if(rightPressed) {
@@ -105,39 +102,39 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     socket.emit('move', me);
     
     // 監聽滑鼠位置
-    window.addEventListener('mousemove', (e) => {
-        if(e.pageX > me.x){
-            x += 0.1;
-            if (me.x + ballRadius > canvas.width){
-                me.x = canvas.width - ballRadius;
-            }
-            me.x = x;
-        }else if(e.pageX < me.x){
-            x -= 0.1;
-            if (me.x < ballRadius){
-                me.x = ballRadius;
-            }
-            me.x = x;
-        }else{
-            me.x === me.x;
-        }
-        if(e.pageY > me.y){
-            y += 0.1;
-            if (me.y + ballRadius > canvas.height){
-                me.y = canvas.height - ballRadius;
-            }
-            me.y = y;
-        }else if(e.pageY < me.y){
-            y -= 0.1;
-            if (me.y < ballRadius){
-                me.y = ballRadius;
-            }
-            me.y = y;
-        }else{
-            me.y === me.y;
-        }
-        socket.emit('move', me);
-    })
+    // window.addEventListener('mousemove', (e) => {
+    //     if(e.pageX > me.x){
+    //         x += 0.001;
+    //         if (me.x + ballRadius > canvas.width){
+    //             me.x = canvas.width - ballRadius;
+    //         }
+    //         me.x = x;
+    //     }else if(e.pageX < me.x){
+    //         x -= 0.001;
+    //         if (me.x < ballRadius){
+    //             me.x = ballRadius;
+    //         }
+    //         me.x = x;
+    //     }else{
+    //         me.x === me.x;
+    //     }
+    //     if(e.pageY > me.y){
+    //         y += 0.001;
+    //         if (me.y + ballRadius > canvas.height){
+    //             me.y = canvas.height - ballRadius;
+    //         }
+    //         me.y = y;
+    //     }else if(e.pageY < me.y){
+    //         y -= 0.001;
+    //         if (me.y < ballRadius){
+    //             me.y = ballRadius;
+    //         }
+    //         me.y = y;
+    //     }else{
+    //         me.y === me.y;
+    //     }
+    //     socket.emit('move', me);
+    // })
 
 
 }

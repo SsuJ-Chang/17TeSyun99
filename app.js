@@ -64,11 +64,13 @@ io.on('connection', (socket) => { // 該 socket 的連線
         console.log(`a player disconnected id=${socket.id}`);
         
         clearInterval(startGenerateBulletes);
-        
+        clearInterval(startGetScore);
+
         let disconnectPlayer = playersInfo.players.find(player => player.id === socket.id);
         playersInfo.players = playersInfo.players.filter(player => player != disconnectPlayer);
         console.log('有玩家離線 當前玩家', playersInfo.players);
-
+        let msgInfo = {id: socket.id, msg: "掰掰！"};
+        io.emit('message', msgInfo)
         socket.emit('playersInfo', playersInfo);
     })
 
@@ -79,6 +81,8 @@ io.on('connection', (socket) => { // 該 socket 的連線
         console.log('新玩家加入 當前玩家', playersInfo.players);
         socket.emit('socketId', socket.id); // 重要！一定要先給 client 才能更新資料給該玩家！
         socket.emit('playersInfo', playersInfo);
+        let msgInfo = {id: socket.id, msg: "我來了！"};
+        io.emit('message', msgInfo);
     })
 
     socket.on('move', (movePlayer) => { // 玩家鍵盤移動事件
@@ -91,18 +95,27 @@ io.on('connection', (socket) => { // 該 socket 的連線
         }
     })
     
-    socket.on('mousemovePage', (movePlayerCursor) => { // 玩家滑鼠移動事件
-        console.log(movePlayerCursor);
-        let movePlayer = playersInfo.players.find(player => player.id === socket.id);
-        console.log('滑鼠移動玩家', movePlayer);
-        if(movePlayer){
-            movePlayer.x = movePlayerCursor.x;
-            movePlayer.y = movePlayerCursor.y;
-            console.log('新滑鼠移動玩家', movePlayer);
-            console.log('所有玩家', playersInfo);
-            socket.emit('playerInfo', playersInfo)
-        }
+    socket.on('message', (msg) => {
+        console.log('後端收到的訊息', msg);
+        // let me = playersInfo.players.find(player => player.id === socket.id)
+        // msg = `${me.name} 說：${msg}`;
+        let msgInfo = {id: socket.id, msg: msg};
+        io.emit('message', msgInfo);
     })
+
+
+    // socket.on('mousemovePage', (movePlayerCursor) => { // 玩家滑鼠移動事件
+    //     console.log(movePlayerCursor);
+    //     let movePlayer = playersInfo.players.find(player => player.id === socket.id);
+    //     console.log('滑鼠移動玩家', movePlayer);
+    //     if(movePlayer){
+    //         movePlayer.x = movePlayerCursor.x;
+    //         movePlayer.y = movePlayerCursor.y;
+    //         console.log('新滑鼠移動玩家', movePlayer);
+    //         console.log('所有玩家', playersInfo);
+    //         socket.emit('playerInfo', playersInfo)
+    //     }
+    // })
 
     socket.on('start', () => { // 玩家正式加入遊戲(有 socket.id 後)
         startGenerateBulletes = setInterval(generateBullete, 5000); // 間隔時間自動產生子彈
@@ -110,7 +123,9 @@ io.on('connection', (socket) => { // 該 socket 的連線
         startGetScore = setInterval(getScore, 1000); // 開始計時累積分數
     })
 
-    socket.on('stop', () => { // 玩家死亡結束 P.S.
+    socket.on('stop', () => { // 玩家死亡結束
+        let msgInfo = {id: socket.id, msg: "我死了！可惡！"};
+        io.emit('message', msgInfo)
         clearInterval(startGenerateBulletes);
         clearInterval(startGetScore);
     })
@@ -133,15 +148,15 @@ io.on('connection', (socket) => { // 該 socket 的連線
     // 子彈設定與行為
     function generateBullete(){ // 產生子彈
         if(socket.id){
-            let bulleteNum = getRandom(8, 12);
+            let bulleteNum = getRandom(10, 15);
             for(let i = 0; i < bulleteNum; i++){
                 let bulletePosX = getRandom(1, 1200) - getRandom(1, 800);
                 let bulletePosY = getRandom(1, 800) - getRandom(1, 400);
-                let bulleteRadius = getRandom(3, 7);
-                let bulleteDx = (getRandom(7, 50) / 15) - (getRandom(9, 50) / 15);
-                let bulleteDy = (getRandom(4, 40) / 15) - (getRandom(6, 40) / 15);
-                let bulleteHp = getRandom(200, 400);
-                let bulleteDamages = getRandom(1, 2);
+                let bulleteRadius = getRandom(3, 8);
+                let bulleteDx = (getRandom(7, 50) / 15) - (getRandom(9, 50) / 13);
+                let bulleteDy = (getRandom(4, 40) / 15) - (getRandom(6, 40) / 13);
+                let bulleteHp = getRandom(350, 600);
+                let bulleteDamages = getRandom(1, 3);
                 let bulleteCreator = playersInfo.players.find( player => player.id === socket.id ).id;
                 
                 let newBullete = new Bullete(bulletePosX, bulletePosY, bulleteRadius, bulleteDx, bulleteDy, bulleteHp, bulleteDamages, bulleteCreator);
@@ -165,8 +180,7 @@ io.on('connection', (socket) => { // 該 socket 的連線
 })
 
 
-
 let port=3000;
-server.listen(port, ()=>{
+server.listen("3000", "192.168.50.193", ()=>{
     console.log(`server listening on port: ${port}`)
 })

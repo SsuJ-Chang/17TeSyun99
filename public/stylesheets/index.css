@@ -1,3 +1,8 @@
+* {
+    box-sizing: border-box;
+    margin: 0; padding: 0;
+}
+
 body {
     box-sizing: border-box;
     font-size: 16px;
@@ -19,4 +24,24 @@ body {
 
 .hidden {
     display: none;
+}
+
+#chatroom {
+    width: 350px; height:200px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    position: absolute; top: 260px; left: 1010px; z-index: 10;
+    list-style-type: none;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+#chat-input {
+    width: 350px; outline: none;
+    position: absolute; top:570px;left: 1010px; z-index: 20;
+    color-scheme: dark;
+}
+
+#chat-btn {
+    position: absolute; top:570px; left: 1210px; z-index: 20;
 }

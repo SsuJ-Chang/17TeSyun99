@@ -28,32 +28,32 @@ document.addEventListener("keydown", keyDownHandler, false); // keydown 事件�
 document.addEventListener("keyup", keyUpHandler, false); // keyup 事件判斷
 function keyDownHandler(e) {
     // console.log(e.key);
-    if(e.key == "Right" || e.key == "ArrowRight" || e.key == "d" || e.key == "D") {
+    if(e.key == "Right" || e.key == "ArrowRight") {
         rightPressed = true;
     }
-    else if(e.key == "Left" || e.key == "ArrowLeft" || e.key == "a" || e.key == "A") {
+    else if(e.key == "Left" || e.key == "ArrowLeft") {
         leftPressed = true;
     }
-    else if(e.key == "Up" || e.key == "ArrowUp" || e.key == "w" || e.key == "W") {
+    else if(e.key == "Up" || e.key == "ArrowUp") {
         upPressed = true;
     }
-    else if(e.key == "Down" || e.key == "ArrowDown" || e.key == "s" || e.key == "S") {
+    else if(e.key == "Down" || e.key == "ArrowDown") {
         downPressed = true;
     }
 }
 
 function keyUpHandler(e) {
     // console.log(e.key);
-    if(e.key == "Right" || e.key == "ArrowRight"  || e.key == "d" || e.key == "D") {
+    if(e.key == "Right" || e.key == "ArrowRight") {
         rightPressed = false;
     }
-    else if(e.key == "Left" || e.key == "ArrowLeft" || e.key == "a" || e.key == "A") {
+    else if(e.key == "Left" || e.key == "ArrowLeft") {
         leftPressed = false;
     }
-    else if(e.key == "Up" || e.key == "ArrowUp" || e.key == "w" || e.key == "W") {
+    else if(e.key == "Up" || e.key == "ArrowUp") {
         upPressed = false;
     }
-    else if(e.key == "Down" || e.key == "ArrowDown" || e.key == "s" || e.key == "S") {
+    else if(e.key == "Down" || e.key == "ArrowDown") {
         downPressed = false;
     }
 }
