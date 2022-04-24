@@ -181,6 +181,6 @@ io.on('connection', (socket) => { // 該 socket 的連線
 
 
 let port=3000;
-server.listen("3000", "192.168.50.193", ()=>{
+server.listen("3000", ()=>{
     console.log(`server listening on port: ${port}`)
 })
