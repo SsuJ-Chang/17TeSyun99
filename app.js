@@ -180,7 +180,7 @@ io.on('connection', (socket) => { // 該 socket 的連線
 })
 
 
-let port=1799;
+let port=3099;
 server.listen(port, ()=>{
     console.log(`server listening on port: ${port}`)
 })
