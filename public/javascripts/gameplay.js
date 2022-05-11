@@ -20,12 +20,11 @@ function updateMyScores(){ // 顯示分數
 }
 
 // 接收 server 傳來的同步資訊
-
-socket.on('playersInfo', (playersInfo)=>{ // 更新玩家資訊
+socket.on('playersInfo', (playersInfo)=>{ // 更新其他玩家資訊
     // console.log('收到的資料', playersInfo.players);
     players = playersInfo.players;
     if(me.id !== ""){
-        me = players.filter(player => player.id === me.id)[0] // 更新資料給 me
+        me.scores = players.filter(player => player.id === me.id)[0].scores // 更新資料給 me
         // console.log(`${me.name}, 位置:(${me.x}, ${me.y}), 分數:${me.scores}`);
         updateMyScores();
     }
@@ -33,14 +32,14 @@ socket.on('playersInfo', (playersInfo)=>{ // 更新玩家資訊
 })
 
 
-socket.on('bulletesInfo', (bulletesInfo) => { // 更新子彈資運
+socket.on('bulletesInfo', (bulletesInfo) => { // 更新子彈資訊
     bulletes = bulletesInfo.bulletes;
     // console.log('全部的子彈', bulletes);
 })
 
 
 
-function gameOverB(bullete){
+function gameOverB(bullete){ // 判定是否碰到子彈
     if(bullete && me.id){ // 子彈與 me 必須還存在
         // console.log(calculateDistance(me.x, me.y, bullete.x, bullete.y))
         if(calculateDistance(me.x, me.y, bullete.x, bullete.y) <= ballRadius+bullete.radius){
@@ -51,7 +50,7 @@ function gameOverB(bullete){
         }
     }
 }
-function gameOverP(player){
+function gameOverP(player){ // 判定是否碰到其他玩家
     if(player && me.id){ // 其他玩家與 me 必須還存在
         if(calculateDistance(me.x, me.y, player.x, player.y) <= ballRadius * 2){
             socket.emit('stop', 'stop');

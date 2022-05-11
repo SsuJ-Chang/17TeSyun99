@@ -83,7 +83,7 @@ let startMoveBulletes = setInterval(moveBullete, 1000/60);  // 呼叫子彈移�
 let isPlayersInfoChanged = false;
 
 // server 主要更新 每秒 60 次
-let serverUpdate = setInterval(mainUpdate, 1000/30);
+let serverUpdate = setInterval(mainUpdate, 1000);
 
 function mainUpdate(){ // 更新 玩家 與 子彈 資訊
     if(isPlayersInfoChanged === true){ // 如果玩家資料有變動才廣播更新
@@ -178,14 +178,6 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
         // clearInterval(startGenerateBulletes);
         clearInterval(startGetScore);
     })
-
-    // socket.on('updateScore', (getScorePlayer) => { // Clent 端玩家得分事件
-    //     let updatePlayer = playersInfo.players.find(player => player.id === getScorePlayer.id)
-    //     if(updatePlayer){
-    //         updatePlayer.scores = getScorePlayer.scores;
-    //         socket.emit('playersInfo', playersInfo);
-    //     }
-    // })
 
     function getScore(){ // server 端計算得分
         if(socket.id){
