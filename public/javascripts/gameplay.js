@@ -26,10 +26,10 @@ socket.on('playersInfo', (playersInfo)=>{ // 更新玩家資訊
     players = playersInfo.players;
     if(me.id !== ""){
         me = players.filter(player => player.id === me.id)[0] // 更新資料給 me
-        console.log(`${me.name}, 位置:(${me.x}, ${me.y}), 分數:${me.scores}`);
+        // console.log(`${me.name}, 位置:(${me.x}, ${me.y}), 分數:${me.scores}`);
         updateMyScores();
     }
-    console.log("現在所有玩家資訊", players);
+    // console.log("現在所有玩家資訊", players);
 })
 
 
