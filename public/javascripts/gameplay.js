@@ -78,25 +78,25 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
 
     // 用鍵盤操控玩家球的移動距離與限制(碰撞)
     if(rightPressed) {
-        x += 4;
+        x += 2;
         if (x + ballRadius > canvas.width){
             x = canvas.width - ballRadius;
         }
     }
     if(leftPressed) {
-        x -= 4;
+        x -= 2;
         if (x < ballRadius){
             x = ballRadius;
         }
     }
     if(upPressed) {
-        y -= 4;
+        y -= 2;
         if (y < ballRadius){
             y = ballRadius;
         }
     }
     if(downPressed) {
-        y += 4;
+        y += 2;
         if (y + ballRadius > canvas.height){
             y = canvas.height - ballRadius;
         }
