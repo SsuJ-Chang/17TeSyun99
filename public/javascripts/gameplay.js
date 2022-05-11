@@ -1,4 +1,4 @@
-let players=[]; // 所有玩家
+let players = []; // 所有玩家
 let bulletes = []; // 所有子彈
 
 function calculateDistance(playerX, playerY, bulleteX, bulleteY){ // 計算子彈和球的距離
@@ -9,25 +9,30 @@ function calculateDistance(playerX, playerY, bulleteX, bulleteY){ // 計算子�
 
 function drawBulete(x, y, radius) { // 畫子彈
     ctx.beginPath();
-    ctx.arc(x, y, radius, 0, Math.PI*2); // x, y 座標的繪圖起始位置即為圖的位置
+    ctx.arc(x, y, radius, 0, Math.PI*2); // x, y 座標的繪圖起始位置即為子彈的位置
     ctx.fill();
     ctx.closePath();
 }
 
-function updateMyScores(){
+function updateMyScores(){ // 顯示分數
     document.getElementById('my-scores').innerHTML="";
     document.getElementById('my-scores').innerHTML=me.scores;
 }
 
-// 接收後端傳來的當前遊戲同步資訊
+// 接收 server 傳來的同步資訊
+
 socket.on('playersInfo', (playersInfo)=>{ // 更新玩家資訊
     // console.log('收到的資料', playersInfo.players);
     players = playersInfo.players;
-    me = players.filter(player => player.id === me.id)[0] // 更新資料給 me
-    // console.log("現在所有玩家資訊", players);
-    // console.log(`${me.name}, 位置:(${me.x}, ${me.y}), 分數:${me.scores}`);
-    updateMyScores();
+    if(me.id !== ""){
+        me = players.filter(player => player.id === me.id)[0] // 更新資料給 me
+        console.log(`${me.name}, 位置:(${me.x}, ${me.y}), 分數:${me.scores}`);
+        updateMyScores();
+    }
+    console.log("現在所有玩家資訊", players);
 })
+
+
 socket.on('bulletesInfo', (bulletesInfo) => { // 更新子彈資運
     bulletes = bulletesInfo.bulletes;
     // console.log('全部的子彈', bulletes);
@@ -97,9 +102,11 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
         }
     }
 
-    me.x = x;
-    me.y = y;
-    socket.emit('move', me);
+    if(x !== me.x || y !== me.y){
+        me.x = x;
+        me.y = y;
+        socket.emit('move', me);
+    }
     
     // 監聽滑鼠位置
     // window.addEventListener('mousemove', (e) => {
