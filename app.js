@@ -53,14 +53,14 @@ class Bullete {
 // 子彈設定與行為
 function generateBullete(){ // 產生子彈
     
-    let bulleteNum = getRandom(10, 15);
+    let bulleteNum = getRandom(3, 5);
     for(let i = 0; i < bulleteNum; i++){
         let bulletePosX = getRandom(1, 1200) - getRandom(1, 800);
         let bulletePosY = getRandom(1, 800) - getRandom(1, 400);
         let bulleteRadius = getRandom(3, 8);
         let bulleteDx = (getRandom(7, 50) / 15) - (getRandom(9, 50) / 13);
         let bulleteDy = (getRandom(4, 40) / 15) - (getRandom(6, 40) / 13);
-        let bulleteHp = getRandom(350, 600);
+        let bulleteHp = getRandom(300, 350);
         let bulleteDamages = getRandom(1, 3);
         
         let newBullete = new Bullete(bulletePosX, bulletePosY, bulleteRadius, bulleteDx, bulleteDy, bulleteHp, bulleteDamages);
@@ -75,15 +75,15 @@ function moveBullete(){  // call 每個子彈移動
     bulletesInfo.bulletes.forEach( bullete => bullete.move() );
 }
 
-let startGenerateBulletes = setInterval(generateBullete, 4000); // 間隔時間自動產生子彈
-let startMoveBulletes = setInterval(moveBullete, 1000/60);  // 呼叫子彈移動
+// let startGenerateBulletes = setInterval(generateBullete, 4000); // 間隔時間自動產生子彈
+// let startMoveBulletes = setInterval(moveBullete, 1000/30);  // 呼叫子彈移動
 
 
 // 玩家資訊是否變動 flag
 let isPlayersInfoChanged = false;
 
 // server 主要更新 每秒 60 次
-let serverUpdate = setInterval(mainUpdate, 1000/60);
+let serverUpdate = setInterval(mainUpdate, 1000/30);
 
 function mainUpdate(){ // 更新 玩家 與 子彈 資訊
     if(isPlayersInfoChanged === true){ // 如果玩家資料有變動才廣播更新
