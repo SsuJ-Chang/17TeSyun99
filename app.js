@@ -70,7 +70,7 @@ function generateBullete(){ // 產生子彈
     console.log(`子彈總數量: ${bulletesInfo.bulletes.length}`);
 }
 
-function moveBullete(){  // call 每個子彈移動 global
+function moveBullete(){  // call 每個子彈移動
     bulletesInfo.bulletes = bulletesInfo.bulletes.filter( bullete => bullete.hp > 0 );
     bulletesInfo.bulletes.forEach( bullete => bullete.move() );
 }
@@ -83,7 +83,7 @@ let startMoveBulletes = setInterval(moveBullete, 1000/60);  // 呼叫子彈移�
 let isPlayersInfoChanged = false;
 
 // server 主要更新 每秒 60 次
-let serverUpdate = setInterval(mainUpdate, 1000);
+let serverUpdate = setInterval(mainUpdate, 1000/60);
 
 function mainUpdate(){ // 更新 玩家 與 子彈 資訊
     if(isPlayersInfoChanged === true){ // 如果玩家資料有變動才廣播更新
