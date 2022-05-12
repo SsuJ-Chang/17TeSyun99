@@ -88,7 +88,7 @@ let serverUpdate = setInterval(mainUpdate, 1000/60);
 function mainUpdate(){ // 更新 玩家 與 子彈 資訊
     if(isPlayersInfoChanged === true){ // 如果玩家資料有變動才廣播更新
         io.emit('playersInfo', playersInfo);
-        // console.log("server 更新玩家資訊");
+        // console.log("server 更新玩家資訊", playersInfo.players[0].x, playersInfo.players[0].y);
         isPlayersInfoChanged = false;
     }
     if(isBulletesGenerated === true){ // 如果產生新的子彈才廣播更新
@@ -106,6 +106,7 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
     let startGetScore; // 宣告累積分數區域變數 玩家離線時可清除
     console.log(`a new player connected id=${socket.id}`);
     socket.emit('login', 'ok')
+    isPlayersInfoChanged = true;
 
     socket.on('disconnect', () => { // 離線事件 依照 socket.id 過濾(刪除)玩家
         console.log(`a player disconnected id=${socket.id}`);
@@ -117,6 +118,7 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
         let msgInfo = {id: socket.id, msg: "掰掰！"};
         io.emit('message', msgInfo)
         socket.emit('playersInfo', playersInfo);
+        isPlayersInfoChanged = true;
     })
 
     // 接收玩家資料初始化事件
@@ -136,9 +138,10 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
             updatePlayer.x = movePlayer.x;
             updatePlayer.y = movePlayer.y;
             isPlayersInfoChanged = true;
-            // console.log(`玩家${updatePlayer.name}座標 (${updatePlayer.x}, ${updatePlayer.y})`);
+            console.log(`玩家${updatePlayer.name}座標 (${updatePlayer.x}, ${updatePlayer.y})`);
             // socket.emit('playersInfo', playersInfo);
         }
+        // console.log(playersInfo.players[0]);
     })
     
     socket.on('message', (msg) => {
@@ -166,6 +169,7 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
         // startGenerateBulletes = setInterval(generateBullete, 5000); // 間隔時間自動產生子彈
         // startMoveBulletes = setInterval(moveBullete, 1000/60);  // 呼叫子彈移動
         startGetScore = setInterval(getScore, 1000); // 開始計時累積分數
+        isPlayersInfoChanged = true;
     })
 
     socket.on('stop', () => { // 玩家死亡結束
@@ -173,6 +177,7 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
         io.emit('message', msgInfo)
         // clearInterval(startGenerateBulletes);
         clearInterval(startGetScore);
+        isPlayersInfoChanged = true;
     })
 
     function getScore(){ // server 端計算得分
