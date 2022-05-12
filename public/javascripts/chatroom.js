@@ -22,7 +22,10 @@ document.querySelector('#chat-btn').addEventListener('click', (e) => {
 socket.on('message', (msgInfo) => {
     let messenger = players.find( player => player.id === msgInfo.id )
     let message = document.createElement('li');
-    message.style.color = `${messenger.color}`;
+    message.style.color = '#00ff00';
+    if(messenger.color){
+        message.style.color = `${messenger.color}`;
+    }
     message.textContent = `${messenger.name} 說：${msgInfo.msg}`;
     document.querySelector('ul').appendChild(message);
     // if(document.querySelector('#chatroom').className === "hidden"){

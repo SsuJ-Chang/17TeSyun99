@@ -32,8 +32,7 @@ function getRandom(min, max){
 
 // 子彈 class
 class Bullete {
-    constructor(x, y , radius, dx, dy, hp, damages, creator){
-        // this.id = id;
+    constructor(x, y , radius, dx, dy, hp, damages){
         this.x = x;
         this.y = y;
         this.radius = radius;
@@ -41,32 +40,33 @@ class Bullete {
         this.dy = dy;
         this.hp = hp;
         this.damages = damages;
-        this.creator = creator;
     }
     move(){
-        this.x += this.dx;
-        this.y += this.dy;
+        // this.x += this.dx;
+        // this.y += this.dy;
         this.hp -= this.damages;
     }
 }
 
+let isBulletesGenerated = false;
+
 // 子彈設定與行為
 function generateBullete(){ // 產生子彈
     
-    let bulleteNum = getRandom(3, 5);
+    let bulleteNum = getRandom(10, 15);
     for(let i = 0; i < bulleteNum; i++){
         let bulletePosX = getRandom(1, 1200) - getRandom(1, 800);
         let bulletePosY = getRandom(1, 800) - getRandom(1, 400);
         let bulleteRadius = getRandom(3, 8);
         let bulleteDx = (getRandom(7, 50) / 15) - (getRandom(9, 50) / 13);
         let bulleteDy = (getRandom(4, 40) / 15) - (getRandom(6, 40) / 13);
-        let bulleteHp = getRandom(300, 350);
+        let bulleteHp = getRandom(300, 400);
         let bulleteDamages = getRandom(1, 3);
         
         let newBullete = new Bullete(bulletePosX, bulletePosY, bulleteRadius, bulleteDx, bulleteDy, bulleteHp, bulleteDamages);
         bulletesInfo.bulletes.push(newBullete);           
     }
-
+    isBulletesGenerated = true;
     console.log(`子彈總數量: ${bulletesInfo.bulletes.length}`);
 }
 
@@ -75,8 +75,8 @@ function moveBullete(){  // call 每個子彈移動
     bulletesInfo.bulletes.forEach( bullete => bullete.move() );
 }
 
-let startGenerateBulletes = setInterval(generateBullete, 4000); // 間隔時間自動產生子彈
-let startMoveBulletes = setInterval(moveBullete, 1000/30);  // 呼叫子彈移動
+let startGenerateBulletes = setInterval(generateBullete, 5000); // 間隔時間自動產生子彈
+let startMoveBulletes = setInterval(moveBullete, 1000/60);  // 呼叫子彈移動 主要是為了讓他會死亡
 
 
 // 玩家資訊是否變動 flag
@@ -91,8 +91,9 @@ function mainUpdate(){ // 更新 玩家 與 子彈 資訊
         // console.log("server 更新玩家資訊");
         isPlayersInfoChanged = false;
     }
-    if(bulletesInfo.bulletes !== []){ // 如果有子彈才廣播更新
+    if(isBulletesGenerated === true){ // 如果產生新的子彈才廣播更新
         io.emit('bulletesInfo', bulletesInfo);
+        isBulletesGenerated = false;
         // console.log('server 更新子彈資訊');
     }
 }
@@ -110,8 +111,6 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
 
     socket.on('disconnect', () => { // 離線事件 依照 socket.id 過濾(刪除)玩家
         console.log(`a player disconnected id=${socket.id}`);
-        
-        // clearInterval(startGenerateBulletes);
         clearInterval(startGetScore);
 
         let disconnectPlayer = playersInfo.players.find(player => player.id === socket.id);
@@ -152,7 +151,6 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
         io.emit('message', msgInfo);
     })
 
-
     // socket.on('mousemovePage', (movePlayerCursor) => { // 玩家滑鼠移動事件
     //     console.log(movePlayerCursor);
     //     let movePlayer = playersInfo.players.find(player => player.id === socket.id);
@@ -183,44 +181,9 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
         if(socket.id){
             playersInfo.players.find(player => player.id === socket.id).scores += 1;
             isPlayersInfoChanged = true;
-            // socket.emit('playersInfo', playersInfo);
         }
     }
 
-    // // 子彈設定與行為
-    // function generateBullete(){ // 產生子彈
-    //     if(socket.id){
-    //         let bulleteNum = getRandom(10, 15);
-    //         for(let i = 0; i < bulleteNum; i++){
-    //             let bulletePosX = getRandom(1, 1200) - getRandom(1, 800);
-    //             let bulletePosY = getRandom(1, 800) - getRandom(1, 400);
-    //             let bulleteRadius = getRandom(3, 8);
-    //             let bulleteDx = (getRandom(7, 50) / 15) - (getRandom(9, 50) / 13);
-    //             let bulleteDy = (getRandom(4, 40) / 15) - (getRandom(6, 40) / 13);
-    //             let bulleteHp = getRandom(350, 600);
-    //             let bulleteDamages = getRandom(1, 3);
-    //             let bulleteCreator = playersInfo.players.find( player => player.id === socket.id ).id;
-                
-    //             let newBullete = new Bullete(bulletePosX, bulletePosY, bulleteRadius, bulleteDx, bulleteDy, bulleteHp, bulleteDamages, bulleteCreator);
-    //             bulletesInfo.bulletes.push(newBullete);           
-    //         }
-    //     } 
-    //     console.log(`子彈總數量: ${bulletesInfo.bulletes.length}`);
-    // }
-
-    // function moveBullete(){  // call 每個子彈移動 global
-    //     if(socket.id){
-    //         let creatorBulletes =  bulletesInfo.bulletes.filter( bullete => bullete.hp > 0 && bullete.creator === socket.id ); // 過濾該玩家產生的子彈 避免呼叫到其他子彈移動
-    //         // console.log(`${socket.id} 的子彈`, creatorBulletes);
-
-    //         bulletesInfo.bulletes = bulletesInfo.bulletes.filter( bullete => bullete.hp > 0 );
-
-    //         // 呼叫該玩家的子彈移動 並過濾(刪除)hp <=0 的子彈並更新所有子彈 Array 給所有玩家
-    //         creatorBulletes.forEach( bullete => bullete.move() );
-    //         // bulletesInfo.bulletes = bulletesInfo.bulletes.filter( bullete => bullete.hp > 0 );
-    //         io.emit('bulletesInfo', bulletesInfo);
-    //     }
-    // }
 })
 
 

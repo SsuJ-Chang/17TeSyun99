@@ -1,6 +1,7 @@
 let players = []; // 所有玩家
 let bulletes = []; // 所有子彈
 
+
 function calculateDistance(playerX, playerY, bulleteX, bulleteY){ // 計算子彈和球的距離
     // let distance = ((playerX-bulleteX)**2+(playerY-bulleteY)**2)**0.5
     let distance = Math.sqrt((playerX-bulleteX)**2+(playerY-bulleteY)**2)
@@ -37,8 +38,6 @@ socket.on('bulletesInfo', (bulletesInfo) => { // 更新子彈資訊
     // console.log('全部的子彈', bulletes);
 })
 
-
-
 function gameOverB(bullete){ // 判定是否碰到子彈
     if(bullete && me.id){ // 子彈與 me 必須還存在
         // console.log(calculateDistance(me.x, me.y, bullete.x, bullete.y))
@@ -63,10 +62,18 @@ function gameOverP(player){ // 判定是否碰到其他玩家
 
 function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render 位置 並將碰撞計算在內
     ctx.clearRect(0, 0, canvas.width, canvas.height); // 清除 canvas
-    // drawBall();
     players.forEach( player => drawBall(player.x, player.y, player.color) );
     players.forEach( player => drawName(player.name, player.x, player.y) );
     bulletes.forEach( bullete => drawBulete(bullete.x, bullete.y, bullete.radius) );
+    // 移動子彈
+    for(let i=0;i<=bulletes.length;i++){
+        if(bulletes[i]){
+            bulletes[i].x += bulletes[i].dx;
+        }
+        if(bulletes[i]){
+            bulletes[i].y += bulletes[i].dy;
+        }
+    }
 
     // 計算子彈和 me 的是否碰撞 有則結束遊戲
     bulletes.forEach( bullete => gameOverB(bullete) );
