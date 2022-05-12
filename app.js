@@ -53,7 +53,7 @@ let isBulletesGenerated = false;
 // 子彈設定與行為
 function generateBullete(){ // 產生子彈
     
-    let bulleteNum = getRandom(10, 15);
+    let bulleteNum = getRandom(13, 18);
     for(let i = 0; i < bulleteNum; i++){
         let bulletePosX = getRandom(1, 1200) - getRandom(1, 800);
         let bulletePosY = getRandom(1, 800) - getRandom(1, 400);
@@ -103,8 +103,6 @@ function mainUpdate(){ // 更新 玩家 與 子彈 資訊
 
 
 io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來源
-    // let startGenerateBulletes; // 宣告產生子彈區域變數 玩家離線時可清除
-    // let startMoveBulletes; // 宣告移動子彈區域變數 玩家離線時可清除
     let startGetScore; // 宣告累積分數區域變數 玩家離線時可清除
     console.log(`a new player connected id=${socket.id}`);
     socket.emit('login', 'ok')

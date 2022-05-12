@@ -62,8 +62,16 @@ function gameOverP(player){ // 判定是否碰到其他玩家
 
 function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render 位置 並將碰撞計算在內
     ctx.clearRect(0, 0, canvas.width, canvas.height); // 清除 canvas
-    players.forEach( player => drawBall(player.x, player.y, player.color) );
-    players.forEach( player => drawName(player.name, player.x, player.y) );
+
+    // render 自己
+    drawBall(me.x, me.y, me.color);
+    drawName(me.name, me.x, me.y);
+
+    let others = players.filter( player => player.id !== me.id); 
+    // render 其他玩家
+    others.forEach( player => drawBall(player.x, player.y, player.color) );
+    others.forEach( player => drawName(player.name, player.x, player.y) );
+    // render 子彈
     bulletes.forEach( bullete => drawBulete(bullete.x, bullete.y, bullete.radius) );
     // 移動子彈
     for(let i=0;i<=bulletes.length;i++){
@@ -79,7 +87,6 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     bulletes.forEach( bullete => gameOverB(bullete) );
 
     // 計算其他玩家和 me 的是否碰撞 有則結束遊戲
-    let others = players.filter( player => player.id !== me.id); 
     others.forEach( player => gameOverP(player) );
 
     // 用鍵盤操控玩家球的移動距離與限制(碰撞)
