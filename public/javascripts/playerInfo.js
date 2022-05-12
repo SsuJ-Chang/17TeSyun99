@@ -2,7 +2,7 @@ let socket = io();
 
 // 玩家資訊
 let playerName = document.getElementById('playerName-input');
-let me = {'id':'', 'name':'', 'color':'#00ff00', 'x':x, 'y':y, 'hp':100, 'scores':0} // 要同步的自身玩家資訊
+let me = {'id':'', 'name':'', 'color':'#111111', 'x':x, 'y':y, 'hp':100, 'scores':0} // 要同步的自身玩家資訊
 
 // 連線進入開啟「起始畫面」選單
 socket.on('login', ()=>{
@@ -15,7 +15,10 @@ document.getElementById('play-button').addEventListener('click', function(e) {
     if (playerName.value) {
         console.log('輸入名稱', playerName.value);
         me.name = playerName.value;
-        let color = Math.floor(Math.random()*16777215).toString(16); // 隨機顏色
+        let color = "111111";
+        while(color === "111111"){
+            color = Math.floor(Math.random()*16777215).toString(16); // 隨機顏色
+        };
         me.color = `#${color}`;
 
 
