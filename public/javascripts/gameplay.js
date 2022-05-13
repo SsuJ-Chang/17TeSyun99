@@ -204,4 +204,4 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
 
 
 }
-let renderInterval = setInterval(draw, 1000/90) // 用間隔時間達到動畫效果 60FPS 永不間斷
+let renderInterval = setInterval(draw, 1000/60) // 用間隔時間達到動畫效果 60FPS 永不間斷

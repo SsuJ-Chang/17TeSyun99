@@ -53,7 +53,7 @@ let isBulletesGenerated = false;
 
 // 子彈設定與行為
 function generateBullete(){ // 產生子彈
-    let bulleteNum = getRandom(23, 30);
+    let bulleteNum = getRandom(25, 32);
     for(let i = 0; i < bulleteNum; i++){
         // 決定出生位置
         const getBornPos = Math.floor(Math.random() * 4);
