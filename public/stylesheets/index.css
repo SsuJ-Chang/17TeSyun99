@@ -15,7 +15,7 @@ body {
 
 #play-menu {
     width: 1000px; height: 600px; position: absolute; top: 0; left: 0;
-    z-index: 50; background-color: rgba(100, 100, 100, 0.5);
+    z-index: 50; background-color: rgba(100, 100, 100, 0.4);
 }
 
 #play-menu-item {
@@ -28,9 +28,9 @@ body {
 
 #chatroom {
     width: 350px; height:200px;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.9);
     color: #fff;
-    position: absolute; top: 260px; left: 1010px; z-index: 10;
+    position: absolute; top: 630px; left: 15px; z-index: 10;
     list-style-type: none;
     overflow: scroll;
     overflow-x: hidden;
@@ -38,7 +38,7 @@ body {
 
 #chat-input {
     width: 350px; outline: none;
-    position: absolute; top:570px;left: 1010px; z-index: 20;
+    position: absolute; top:840px; left: 15px; z-index: 20;
     color-scheme: dark;
 }
 
