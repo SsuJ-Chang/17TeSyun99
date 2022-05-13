@@ -2,7 +2,7 @@ let socket = io();
 
 // 玩家資訊
 let playerName = document.getElementById('playerName-input');
-let me = {'id':'', 'name':'', 'color':'#111111', 'x':x, 'y':y, 'hp':100, 'scores':0} // 要同步的自身玩家資訊
+let me = {'id':'', 'name':'', 'color':'#111111', 'x':x, 'y':y, 'hp':100, 'scores':0, "dx":0, "dy":0} // 要同步的自身玩家資訊
 
 // 連線進入開啟「起始畫面」選單
 socket.on('login', ()=>{

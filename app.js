@@ -98,7 +98,7 @@ function moveBullete(){  // call 每個子彈移動
     bulletesInfo.bulletes.forEach( bullete => bullete.move() );
 }
 const tickTime = (Math.floor(Math.random() * 3) + 6)*1000
-console.log(tickTime);
+// console.log(tickTime);
 let startGenerateBulletes = setInterval(generateBullete, tickTime); // 間隔時間自動產生子彈
 let startMoveBulletes = setInterval(moveBullete, 1000/60);  // 呼叫子彈移動 主要是為了讓他會死亡
 
@@ -106,8 +106,8 @@ let startMoveBulletes = setInterval(moveBullete, 1000/60);  // 呼叫子彈移�
 // 玩家資訊是否變動 flag
 let isPlayersInfoChanged = false;
 
-// server 主要更新 每秒 60 次
-let serverUpdate = setInterval(mainUpdate, 1000/60);
+// server 主要更新 每秒 30 次
+let serverUpdate = setInterval(mainUpdate, 1000/30);
 
 function mainUpdate(){ // 更新 玩家 與 子彈 資訊
     if(isPlayersInfoChanged === true){ // 如果玩家資料有變動才廣播更新

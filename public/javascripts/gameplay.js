@@ -73,14 +73,20 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     // render 其他玩家
     others.forEach( player => drawBall(player.x, player.y, player.color) );
     others.forEach( player => drawName(player.name, player.x, player.y) );
+    // 移動其他玩家
+    for(let i=0;i<=others.length;i++){
+        if(others[i]){
+            others[i].x += others[i].dx;
+            others[i].y += others[i].dy;
+        }
+    }
+
     // render 子彈
     bulletes.forEach( bullete => drawBulete(bullete.x, bullete.y, bullete.radius) );
     // 移動子彈
     for(let i=0;i<=bulletes.length;i++){
         if(bulletes[i]){
             bulletes[i].x += bulletes[i].dx;
-        }
-        if(bulletes[i]){
             bulletes[i].y += bulletes[i].dy;
         }
     }
@@ -94,34 +100,48 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     // 用鍵盤操控玩家球的移動距離與限制(碰撞)
     if(rightPressed) {
         x += 2;
+        me.dx = 2;
         if (x + ballRadius > canvas.width){
             x = canvas.width - ballRadius;
+            me.dx = 0;
         }
     }
     if(leftPressed) {
         x -= 2;
+        me.dx = -2;
         if (x < ballRadius){
             x = ballRadius;
+            me.dx = 0;
         }
     }
     if(upPressed) {
         y -= 2;
+        me.dy = -2;
         if (y < ballRadius){
             y = ballRadius;
+            me.dy = 0;
         }
     }
     if(downPressed) {
         y += 2;
+        me.dy = -2;
         if (y + ballRadius > canvas.height){
             y = canvas.height - ballRadius;
+            me.dy = 0;
         }
     }
 
-    if(x !== me.x || y !== me.y){
-        me.x = x;
-        me.y = y;
-        socket.emit('move', me);
+    if(x === me.x){
+        dx = 0;
     }
+    if(y === me.y){
+        dy = 0;
+    }
+    
+    me.x = x;
+    me.y = y;
+    socket.emit('move', me);
+    
     
     // 監聽滑鼠位置
     // window.addEventListener('mousemove', (e) => {
