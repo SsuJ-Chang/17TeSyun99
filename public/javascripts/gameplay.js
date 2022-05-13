@@ -62,8 +62,17 @@ function checkHitByPlayer(player){ // 判定是否碰到其他玩家
     }
 }
 
+let isDirectionChanged = false;
+let lastX = 0;
+let lastY = 0;
+let lastDx = 0;
+let lastDy = 0;
+
 function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render 位置 並將碰撞計算在內
     ctx.clearRect(0, 0, canvas.width, canvas.height); // 清除 canvas
+    isDirectionChanged = false;
+    lastX = me.x;
+    lastY = me.y;
 
     // render 自己
     drawBall(me.x, me.y, me.color);
@@ -124,23 +133,38 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     }
     if(downPressed) {
         y += 2;
-        me.dy = -2;
+        me.dy = 2;
         if (y + ballRadius > canvas.height){
             y = canvas.height - ballRadius;
             me.dy = 0;
         }
     }
 
-    if(x === me.x){
+    if(lastX === me.x){
         dx = 0;
+        isDirectionChanged = true;
     }
-    if(y === me.y){
+    if(lastY === me.y){
         dy = 0;
+        isDirectionChanged = true;
     }
-    
+
     me.x = x;
     me.y = y;
-    socket.emit('move', me);
+    
+    if(me.dx !== lastDx){
+        lastDx = me.dx;
+        isDirectionChanged = true;
+    }
+
+    if(me.dy !== lastDy){
+        lastDy = me.dy;
+        isDirectionChanged = true;
+    }
+
+    if(isDirectionChanged === true){
+        socket.emit('move', me);
+    }
     
     
     // 監聽滑鼠位置

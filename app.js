@@ -13,6 +13,7 @@ app.get('/', (req, res)=>{
 // 導入 socket.io
 const { Server } = require("socket.io");
 const { log } = require('console');
+const { SocketAddress } = require('net');
 const io = new Server(server);
 
 
@@ -107,7 +108,7 @@ let startMoveBulletes = setInterval(moveBullete, 1000/60);  // 呼叫子彈移�
 let isPlayersInfoChanged = false;
 
 // server 主要更新 每秒 30 次
-let serverUpdate = setInterval(mainUpdate, 1000/30);
+let serverUpdate = setInterval(mainUpdate, 1000/60);
 
 function mainUpdate(){ // 更新 玩家 與 子彈 資訊
     if(isPlayersInfoChanged === true){ // 如果玩家資料有變動才廣播更新
@@ -130,6 +131,8 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
     let startGetScore; // 宣告累積分數區域變數 玩家離線時可清除
     console.log(`a new player connected id=${socket.id}`);
     socket.emit('login', 'ok')
+    socket.emit('playersInfo', playersInfo);
+    socket.emit('bulletesInfo', bulletesInfo);
     isPlayersInfoChanged = true;
 
     socket.on('disconnect', () => { // 離線事件 依照 socket.id 過濾(刪除)玩家
@@ -147,7 +150,7 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
 
     // 接收玩家資料初始化事件
     socket.on('playerInit', (player) => { // 玩家初始化資料
-        let newPlayer = {'id':socket.id, 'name':player.name, 'color':player.color, 'x':player.x, 'y':player.y, 'hp':player.hp, 'scores':player.scores}
+        let newPlayer = {'id':socket.id, 'name':player.name, 'color':player.color, 'x':player.x, 'y':player.y, 'hp':player.hp, 'scores':player.scores, 'dx':player.dx, 'dy':player.dy}
         playersInfo.players.push(newPlayer);
         console.log('新玩家加入 當前玩家', playersInfo.players);
         socket.emit('socketId', socket.id); // 重要！一定要先給 client 才能更新資料給該玩家！
@@ -161,10 +164,13 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
         if(updatePlayer){
             updatePlayer.x = movePlayer.x;
             updatePlayer.y = movePlayer.y;
+            updatePlayer.dx = movePlayer.dx;
+            updatePlayer.dy = movePlayer.dy;
             isPlayersInfoChanged = true;
             // console.log(`玩家${updatePlayer.name}座標 (${updatePlayer.x}, ${updatePlayer.y})`);
         }
         // console.log(playersInfo.players[0]);
+        // console.log(`dx:${updatePlayer.dx}, dy:${updatePlayer.dy}`);
     })
     
     socket.on('message', (msg) => {
