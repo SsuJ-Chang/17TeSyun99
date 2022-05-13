@@ -140,6 +140,10 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
         }
     }
 
+    me.x = x;
+    me.y = y;
+    
+    // 位置沒有改變
     if(lastX === me.x){
         me.dx = 0;
         isDirectionChanged = true;
@@ -149,14 +153,11 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
         isDirectionChanged = true;
     }
 
-    me.x = x;
-    me.y = y;
-    
+    // 位移量改變
     if(me.dx !== lastDx){
         lastDx = me.dx;
         isDirectionChanged = true;
     }
-
     if(me.dy !== lastDy){
         lastDy = me.dy;
         isDirectionChanged = true;
