@@ -141,11 +141,11 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     }
 
     if(lastX === me.x){
-        dx = 0;
+        me.dx = 0;
         isDirectionChanged = true;
     }
     if(lastY === me.y){
-        dy = 0;
+        me.dy = 0;
         isDirectionChanged = true;
     }
 
