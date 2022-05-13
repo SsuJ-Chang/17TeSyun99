@@ -108,7 +108,7 @@ let startMoveBulletes = setInterval(moveBullete, 1000/60);  // 呼叫子彈移�
 let isPlayersInfoChanged = false;
 
 // server 主要更新 每秒 30 次
-let serverUpdate = setInterval(mainUpdate, 1000/60);
+let serverUpdate = setInterval(mainUpdate, 1000/30);
 
 function mainUpdate(){ // 更新 玩家 與 子彈 資訊
     if(isPlayersInfoChanged === true){ // 如果玩家資料有變動才廣播更新
