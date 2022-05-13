@@ -42,8 +42,8 @@ class Bullete {
         this.damages = damages;
     }
     move(){
-        // this.x += this.dx;
-        // this.y += this.dy;
+        this.x += this.dx;
+        this.y += this.dy;
         this.hp -= this.damages;
     }
 }
@@ -52,16 +52,39 @@ let isBulletesGenerated = false;
 
 // 子彈設定與行為
 function generateBullete(){ // 產生子彈
-    
-    let bulleteNum = getRandom(13, 18);
+    let bulleteNum = getRandom(23, 30);
     for(let i = 0; i < bulleteNum; i++){
-        let bulletePosX = getRandom(1, 1200) - getRandom(1, 800);
-        let bulletePosY = getRandom(1, 800) - getRandom(1, 400);
+        // 決定出生位置
+        const getBornPos = Math.floor(Math.random() * 4);
+        let bulletePosX = 0;
+        let bulletePosY = 0;
+        let bulleteDx = 0;
+        let bulleteDy = 0;
+        // 產生隨機數值
+        if(getBornPos === 0){ // canvas 上方
+            bulletePosX = getRandom(1, 1200) - getRandom(1, 800);
+            bulletePosY = 0 - getRandom(50, 200);
+            bulleteDx = (getRandom(7, 50) / 10) - (getRandom(9, 50) / 10);
+            bulleteDy = (getRandom(4, 40) / 10)
+        }else if(getBornPos === 1){ // canvas 下方
+            bulletePosX = getRandom(1, 1200) - getRandom(1, 800);
+            bulletePosY = getRandom(650, 800);
+            bulleteDx = (getRandom(7, 50) / 10) - (getRandom(9, 50) / 10);
+            bulleteDy = 0 - (getRandom(6, 40) / 10);
+        }else if(getBornPos === 2){ // canvas 左方
+            bulletePosX = 0 - getRandom(50, 200);
+            bulletePosY = getRandom(1, 800) - getRandom(1, 400);
+            bulleteDx = (getRandom(7, 50) / 10);
+            bulleteDy = (getRandom(6, 40) / 10) - (getRandom(8, 40) / 10);
+        }else{ // canvas 右方
+            bulletePosX = getRandom(1050, 1200)
+            bulletePosY = getRandom(1, 800) - getRandom(1, 400);
+            bulleteDx = 0 - (getRandom(9, 50) / 10);
+            bulleteDy = (getRandom(6, 40) / 10) - (getRandom(8, 40) / 10);
+        }
         let bulleteRadius = getRandom(3, 8);
-        let bulleteDx = (getRandom(7, 50) / 15) - (getRandom(9, 50) / 13);
-        let bulleteDy = (getRandom(4, 40) / 15) - (getRandom(6, 40) / 13);
-        let bulleteHp = getRandom(300, 400);
-        let bulleteDamages = getRandom(1, 3);
+        let bulleteHp = getRandom(500, 700);
+        let bulleteDamages = getRandom(2, 3);
         
         let newBullete = new Bullete(bulletePosX, bulletePosY, bulleteRadius, bulleteDx, bulleteDy, bulleteHp, bulleteDamages);
         bulletesInfo.bulletes.push(newBullete);           
@@ -74,8 +97,9 @@ function moveBullete(){  // call 每個子彈移動
     bulletesInfo.bulletes = bulletesInfo.bulletes.filter( bullete => bullete.hp > 0 );
     bulletesInfo.bulletes.forEach( bullete => bullete.move() );
 }
-
-let startGenerateBulletes = setInterval(generateBullete, 5000); // 間隔時間自動產生子彈
+const tickTime = (Math.floor(Math.random() * 3) + 6)*1000
+console.log(tickTime);
+let startGenerateBulletes = setInterval(generateBullete, tickTime); // 間隔時間自動產生子彈
 let startMoveBulletes = setInterval(moveBullete, 1000/60);  // 呼叫子彈移動 主要是為了讓他會死亡
 
 
@@ -138,8 +162,7 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
             updatePlayer.x = movePlayer.x;
             updatePlayer.y = movePlayer.y;
             isPlayersInfoChanged = true;
-            console.log(`玩家${updatePlayer.name}座標 (${updatePlayer.x}, ${updatePlayer.y})`);
-            // socket.emit('playersInfo', playersInfo);
+            // console.log(`玩家${updatePlayer.name}座標 (${updatePlayer.x}, ${updatePlayer.y})`);
         }
         // console.log(playersInfo.players[0]);
     })
@@ -175,7 +198,6 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
     socket.on('stop', () => { // 玩家死亡結束
         let msgInfo = {id: socket.id, msg: "我死了！可惡！"};
         io.emit('message', msgInfo)
-        // clearInterval(startGenerateBulletes);
         clearInterval(startGetScore);
         isPlayersInfoChanged = true;
     })

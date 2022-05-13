@@ -38,24 +38,26 @@ socket.on('bulletesInfo', (bulletesInfo) => { // 更新子彈資訊
     // console.log('全部的子彈', bulletes);
 })
 
-function gameOverB(bullete){ // 判定是否碰到子彈
+function checkHitByBullete(bullete){ // 判定是否碰到子彈
     if(bullete && me.id){ // 子彈與 me 必須還存在
         // console.log(calculateDistance(me.x, me.y, bullete.x, bullete.y))
         if(calculateDistance(me.x, me.y, bullete.x, bullete.y) <= ballRadius+bullete.radius){
+            
             socket.emit('stop', 'stop');
             document.location.reload();
-            clearInterval(renderInterval);
             alert(`你死了，存活了 ${me.scores} 秒。`);
+            // clearInterval(renderInterval);
         }
     }
 }
-function gameOverP(player){ // 判定是否碰到其他玩家
+function checkHitByPlayer(player){ // 判定是否碰到其他玩家
     if(player && me.id){ // 其他玩家與 me 必須還存在
         if(calculateDistance(me.x, me.y, player.x, player.y) <= ballRadius * 2){
+            
             socket.emit('stop', 'stop');
             document.location.reload();
-            clearInterval(renderInterval);
             alert(`你死了，存活了 ${me.scores} 秒。`);
+            // clearInterval(renderInterval);
         }
     }
 }
@@ -84,10 +86,10 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     }
 
     // 計算子彈和 me 的是否碰撞 有則結束遊戲
-    bulletes.forEach( bullete => gameOverB(bullete) );
+    bulletes.forEach( bullete => checkHitByBullete(bullete) );
 
     // 計算其他玩家和 me 的是否碰撞 有則結束遊戲
-    others.forEach( player => gameOverP(player) );
+    others.forEach( player => checkHitByPlayer(player) );
 
     // 用鍵盤操控玩家球的移動距離與限制(碰撞)
     if(rightPressed) {
