@@ -22,11 +22,11 @@ body {
     position: relative; top:250px; left: 370px; 
 }
 
-#playerName-input {
+#userName-input {
     outline: none; width: 200px; height: 30px;
 }
 
-#play-button {
+#play-button, #talk-button {
     width: 100px; height: 30px;
 }
 

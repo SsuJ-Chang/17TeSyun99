@@ -1,9 +1,8 @@
-let players = []; // 所有玩家
+let players = []; // 所有玩家player
 let bulletes = []; // 所有子彈
-
+let talkers = []; // 所有純聊天者talker
 
 function calculateDistance(playerX, playerY, bulleteX, bulleteY){ // 計算子彈和球的距離
-    // let distance = ((playerX-bulleteX)**2+(playerY-bulleteY)**2)**0.5
     let distance = Math.sqrt((playerX-bulleteX)**2+(playerY-bulleteY)**2)
     return distance
 }
@@ -24,7 +23,7 @@ function updateMyScores(){ // 顯示分數
 socket.on('playersInfo', (playersInfo)=>{ // 更新其他玩家資訊
     // console.log('收到的資料', playersInfo.players);
     players = playersInfo.players;
-    if(me.id !== ""){
+    if(me.id !== "" && me.type === 0){
         me.scores = players.filter(player => player.id === me.id)[0].scores // 更新資料給 me
         // console.log(`${me.name}, 位置:(${me.x}, ${me.y}), 分數:${me.scores}`);
         updateMyScores();
@@ -32,31 +31,36 @@ socket.on('playersInfo', (playersInfo)=>{ // 更新其他玩家資訊
     // console.log("現在所有玩家資訊", players);
 })
 
-
 socket.on('bulletesInfo', (bulletesInfo) => { // 更新子彈資訊
     bulletes = bulletesInfo.bulletes;
     // console.log('全部的子彈', bulletes);
 })
 
+socket.on('talkersInfo', (talkersInfo) => {
+    talkers = talkersInfo.talkers;
+    console.log("現在所有純聊天者資訊", talkers);
+})
+
+
 function checkHitByBullete(bullete){ // 判定是否碰到子彈
-    if(bullete && me.id){ // 子彈與 me 必須還存在
+    if(bullete && me.id && me.type === 0){ // 子彈與 me 必須還存在
         // console.log(calculateDistance(me.x, me.y, bullete.x, bullete.y))
         if(calculateDistance(me.x, me.y, bullete.x, bullete.y) <= ballRadius+bullete.radius){
             socket.emit('stop', 'stop');
             socket.disconnect()
             document.location.reload();
-            alert(`你死了，存活了 ${me.scores} 秒。`);
+            alert(`你被子彈打中了，存活了 ${me.scores} 秒。`);
             // clearInterval(renderInterval);
         }
     }
 }
 function checkHitByPlayer(player){ // 判定是否碰到其他玩家
-    if(player && me.id){ // 其他玩家與 me 必須還存在
+    if(player && me.id && me.type === 0){ // 其他玩家與 me 必須還存在
         if(calculateDistance(me.x, me.y, player.x, player.y) <= ballRadius * 2){
             socket.emit('stop', 'stop');
             socket.disconnect()
             document.location.reload();
-            alert(`你死了，存活了 ${me.scores} 秒。`);
+            alert(`你撞到別人了，存活了 ${me.scores} 秒。`);
             // clearInterval(renderInterval);
         }
     }
@@ -75,8 +79,10 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     lastY = me.y;
 
     // render 自己
-    drawBall(me.x, me.y, me.color);
-    drawName(me.name, me.x, me.y);
+    if(me.type === 0){
+        drawBall(me.x, me.y, me.color);
+        drawName(me.name, me.x, me.y);
+    }
 
     let others = players.filter( player => player.id !== me.id); 
     // render 其他玩家

@@ -18,12 +18,15 @@ const io = new Server(server);
 
 
 // 伺服器遊戲資訊
-let playersInfo = { // 同一局遊戲中所有玩家資訊
+let playersInfo = { // 同一局遊戲中所有 玩家players 資訊
     'players':[],
-    'leaderboard':[]
+    'leaderboard':[],
 }
 let bulletesInfo = { // 同一局遊戲子彈資訊
     'bulletes':[]
+}
+let talkersInfo = { // 同一局遊戲所有 純聊天者talkers 資訊
+    'talkers':[]
 }
 
 // 隨機亂數 function 可以練習外部引入
@@ -104,14 +107,16 @@ let startGenerateBulletes = setInterval(generateBullete, tickTime); // 間隔時
 let startMoveBulletes = setInterval(moveBullete, 1000/60);  // 呼叫子彈移動 主要是為了讓他會死亡
 
 
-// 玩家資訊是否變動 flag
+// 玩家player 資訊是否變動 flag
 let isPlayersInfoChanged = false;
+// 純聊天者talker 資訊是否變動 flag
+let isTalkersInfoChanged = false;
 
 // server 主要更新 每秒 60 次
 let serverUpdate = setInterval(mainUpdate, 1000/60);
 
 function mainUpdate(){ // 更新 玩家 與 子彈 資訊
-    if(isPlayersInfoChanged === true){ // 如果玩家資料有變動才廣播更新
+    if(isPlayersInfoChanged === true){ // 如果玩家player 資料有變動才廣播更新
         io.emit('playersInfo', playersInfo);
         // console.log("server 更新玩家資訊", playersInfo.players[0].x, playersInfo.players[0].y);
         isPlayersInfoChanged = false;
@@ -121,6 +126,10 @@ function mainUpdate(){ // 更新 玩家 與 子彈 資訊
         isBulletesGenerated = false;
         // console.log('server 更新子彈資訊');
     }
+    if(isTalkersInfoChanged === true){ // 如果純聊天者talker 資料有變動才廣播更新
+        io.emit('talkersInfo', talkersInfo);
+        isTalkersInfoChanged = false;
+    }
 }
 
 // 更新排行榜
@@ -129,35 +138,55 @@ function mainUpdate(){ // 更新 玩家 與 子彈 資訊
 
 io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來源
     let startGetScore; // 宣告累積分數區域變數 玩家離線時可清除
-    console.log(`a new player connected id=${socket.id}`);
+    console.log(`新的使用者 id=${socket.id}`);
     socket.emit('login', 'ok')
     socket.emit('playersInfo', playersInfo);
     socket.emit('bulletesInfo', bulletesInfo);
-    isPlayersInfoChanged = true;
+    socket.emit('talkersInfo', talkersInfo);
 
     socket.on('disconnect', () => { // 離線事件 依照 socket.id 過濾(刪除)玩家
-        console.log(`a player disconnected id=${socket.id}`);
-        clearInterval(startGetScore);
+        console.log(`使用者離線 id=${socket.id}`);
 
         let disconnectPlayer = playersInfo.players.find(player => player.id === socket.id);
         playersInfo.players = playersInfo.players.filter(player => player != disconnectPlayer);
-        console.log('有玩家離線 當前玩家', playersInfo.players);
+        let disconnectTalker = talkersInfo.talkers.find(talker => talker.id === socket.id);
+        talkersInfo.talkers = talkersInfo.talkers.filter(talker => talker != disconnectTalker);
+        
+        if(disconnectPlayer !== undefined){
+            // console.log('有玩家離線，當前玩家', playersInfo.players);
+            socket.emit('playersInfo', playersInfo);
+            isPlayersInfoChanged = true;
+        }else{
+            // console.log('有使用者離線 當前純聊天者', talkersInfo.talkers);
+            socket.emit('talkersInfo', talkersInfo);
+            isTalkersInfoChanged = true;
+        }
         let msgInfo = {id: socket.id, msg: "掰掰！"};
         io.emit('message', msgInfo)
-        socket.emit('playersInfo', playersInfo);
-        isPlayersInfoChanged = true;
     })
 
-    // 接收玩家資料初始化事件
-    socket.on('playerInit', (player) => { // 玩家初始化資料
-        let newPlayer = {'id':socket.id, 'name':player.name, 'color':player.color, 'x':player.x, 'y':player.y, 'hp':player.hp, 'scores':player.scores, 'dx':player.dx, 'dy':player.dy}
+    // 接收 player 資料初始化事件
+    socket.on('playerInit', (player) => { // player 初始化資料
+        let newPlayer = {'type': 0,'id':socket.id, 'name':player.name, 'color':player.color, 'x':player.x, 'y':player.y, 'hp':player.hp, 'scores':player.scores, 'dx':player.dx, 'dy':player.dy}
         playersInfo.players.push(newPlayer);
         console.log('新玩家加入 當前玩家', playersInfo.players);
         socket.emit('socketId', socket.id); // 重要！一定要先給 client 才能更新資料給該玩家！
         socket.emit('playersInfo', playersInfo);
-        let msgInfo = {id: socket.id, msg: "我來了！"};
-        io.emit('message', msgInfo);
+        
     })
+
+    // 接收 talker 資料初始化事件
+    socket.on('talkerInit', (talker) => { // talker 初始化資料
+        let newTalker = {'type': 1, 'id':socket.id, 'name':talker.name, 'color':talker.color }
+        talkersInfo.talkers.push(newTalker);
+        console.log('新 talker 加入 當前 talkers', talkersInfo.talkers);
+        socket.emit('socketId', socket.id); // 重要！一定要先給 client 才能更新資料給該玩家！
+        isTalkersInfoChanged = true;
+        socket.emit('talkersInfo', talkersInfo);
+        // let msgInfo = {id: socket.id, msg: "我來了！"};
+        // io.emit('message', msgInfo);
+    })
+
 
     socket.on('move', (movePlayer) => { // 玩家鍵盤移動事件
         let updatePlayer = playersInfo.players.find(player => player.id === movePlayer.id)
@@ -195,9 +224,9 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
     // })
 
     socket.on('start', () => { // 玩家正式加入遊戲(有 socket.id 後)
-        // startGenerateBulletes = setInterval(generateBullete, 5000); // 間隔時間自動產生子彈
-        // startMoveBulletes = setInterval(moveBullete, 1000/60);  // 呼叫子彈移動
         startGetScore = setInterval(getScore, 1000); // 開始計時累積分數
+        let msgInfo = {id: socket.id, msg: "我來了！"};
+        io.emit('message', msgInfo);
         isPlayersInfoChanged = true;
     })
 

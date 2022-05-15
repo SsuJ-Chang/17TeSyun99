@@ -20,11 +20,21 @@ document.querySelector('#chat-btn').addEventListener('click', (e) => {
 })
 
 socket.on('message', (msgInfo) => {
-    let messenger = players.find( player => player.id === msgInfo.id )
+    let messenger;
+    if(players.find( player => player.id === msgInfo.id )){
+        messenger = players.find( player => player.id === msgInfo.id );
+    }else{
+        messenger = talkers.find( talker => talker.id === msgInfo.id );
+    }
+    
     if(messenger){
         let message = document.createElement('li');
         message.style.color = `${messenger.color}`;
-        message.textContent = `${messenger.name} 說：${msgInfo.msg}`;
+        if(messenger.type === 0){
+            message.textContent = ` ${messenger.name} 說：${msgInfo.msg}`;
+        }else{
+            message.textContent = ` [吃瓜群眾] ${messenger.name} 說：${msgInfo.msg}`;
+        }
         document.querySelector('ul').appendChild(message);
     };
     // if(document.querySelector('#chatroom').className === "hidden"){
@@ -32,10 +42,10 @@ socket.on('message', (msgInfo) => {
     // }
 })
 
-document.querySelector('#temp').addEventListener('click', (e) => {
-    e.preventDefault();
-    if(document.querySelector("#chat-input").className === "hidden"){
-        document.querySelector("#chat-input").classList.remove("hidden");
-    }
-    document.querySelector("#chat-input").focus();
-})
+// document.querySelector('#temp').addEventListener('click', (e) => {
+//     e.preventDefault();
+//     if(document.querySelector("#chat-input").className === "hidden"){
+//         document.querySelector("#chat-input").classList.remove("hidden");
+//     }
+//     document.querySelector("#chat-input").focus();
+// })
