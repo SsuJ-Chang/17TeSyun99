@@ -1,6 +1,7 @@
 let players = []; // 所有玩家player
 let bulletes = []; // 所有子彈
 let talkers = []; // 所有純聊天者talker
+let isPaused = false; // 是否暫停
 
 function calculateDistance(playerX, playerY, bulleteX, bulleteY){ // 計算子彈和球的距離
     let distance = Math.sqrt((playerX-bulleteX)**2+(playerY-bulleteY)**2)
@@ -16,7 +17,10 @@ function drawBulete(x, y, radius) { // 畫子彈
 
 function updateMyScores(){ // 顯示分數
     document.getElementById('my-scores').innerHTML="";
-    document.getElementById('my-scores').innerHTML=me.scores;
+    if(isPaused === false){
+        document.getElementById('my-scores').innerHTML=me.scores;
+    }
+    document.getElementById('my-scores').innerHTML=me.scores+' PAUSE';
 }
 
 // 接收 server 傳來的同步資訊
@@ -99,10 +103,12 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     // render 子彈
     bulletes.forEach( bullete => drawBulete(bullete.x, bullete.y, bullete.radius) );
     // 移動子彈
-    for(let i=0;i<=bulletes.length;i++){
-        if(bulletes[i]){
-            bulletes[i].x += bulletes[i].dx;
-            bulletes[i].y += bulletes[i].dy;
+    if(isPaused === false){
+        for(let i=0;i<=bulletes.length;i++){
+            if(bulletes[i]){
+                bulletes[i].x += bulletes[i].dx;
+                bulletes[i].y += bulletes[i].dy;
+            }
         }
     }
 

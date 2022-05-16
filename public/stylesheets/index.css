@@ -5,7 +5,7 @@
 
 body {
     box-sizing: border-box;
-    font-size: 16px;
+    font-size: 14px;
     margin: 0;
 }
 
@@ -15,7 +15,7 @@ body {
 
 #play-menu {
     width: 1000px; height: 600px; position: absolute; top: 0; left: 0;
-    z-index: 50; background-color: rgba(100, 100, 100, 0.4);
+    z-index: 50; background-color: rgba(100, 100, 100, 0.15);
 }
 
 #play-menu-item {
@@ -40,20 +40,38 @@ body {
 
 #chat-window {
     width: 350px; height:200px;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.3);
     color: #fff;
-    position: absolute; top: 630px; left: 15px; z-index: 10;
+    position: absolute; top: 370px; left: 10px; z-index: 10;
     list-style-type: none;
     overflow: scroll;
     overflow-x: hidden;
 }
 
+li {
+    word-wrap:break-word;
+}
+
 #chat-input {
     width: 350px; outline: none;
-    position: absolute; top:840px; left: 15px; z-index: 20;
-    color-scheme: dark;
+    position: absolute; top:575px; left: 10px; z-index: 20;
+    color-scheme: dark; opacity: 0.3;
 }
 
 #chat-btn {
-    position: absolute; top:570px; left: 1210px; z-index: 20;
+    position: absolute; top:575px; left: 370px; z-index: 20;
+}
+
+/* scrollbar 設定 */
+::-webkit-scrollbar{
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+background: #ffffff; 
+}
+::-webkit-scrollbar-thumb {
+background: #bbb; 
+}
+::-webkit-scrollbar-thumb:hover {
+background: #999;
 }
