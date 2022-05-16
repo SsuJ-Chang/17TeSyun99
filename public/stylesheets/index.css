@@ -38,7 +38,7 @@ body {
     position: absolute; top: 5px; left: 5px; color: white; font-size: 20px;
 }
 
-#chatWindow {
+#chat-window {
     width: 350px; height:200px;
     background-color: rgba(0, 0, 0, 0.9);
     color: #fff;
