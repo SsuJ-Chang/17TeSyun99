@@ -51,7 +51,7 @@ document.getElementById('talk-button').addEventListener('click', function(e) {
         me.type = 1;
         console.log('輸入名稱', userName.value);
         me.name = userName.value;
-        me.color = '#fff';
+        me.color = '#777';
 
     console.log('登入純聊天者資訊', me);
     document.getElementById('play-menu').classList.add('hidden');

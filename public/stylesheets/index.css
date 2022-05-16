@@ -48,7 +48,7 @@ body {
     overflow-x: hidden;
 }
 
-li {
+#chat-window>li {
     word-wrap:break-word;
 }
 
@@ -67,11 +67,11 @@ li {
     width: 8px;
 }
 ::-webkit-scrollbar-track {
-background: #ffffff; 
+background: rgba(0, 0, 0, 0); 
 }
 ::-webkit-scrollbar-thumb {
-background: #bbb; 
+background: rgba(150, 150, 150, 0.3); 
 }
 ::-webkit-scrollbar-thumb:hover {
-background: #999;
+background: rgba(240, 240, 240, 0.5);
 }

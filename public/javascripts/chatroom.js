@@ -66,15 +66,4 @@ socket.on('message', (msgInfo) => {
             
         }
     };
-    // if(document.querySelector('#chat-window').className === "hidden"){
-    //     document.querySelector('#chat-window').classList.remove('hidden');
-    // }
 })
-
-// document.querySelector('#temp').addEventListener('click', (e) => {
-//     e.preventDefault();
-//     if(document.querySelector("#chat-input").className === "hidden"){
-//         document.querySelector("#chat-input").classList.remove("hidden");
-//     }
-//     document.querySelector("#chat-input").focus();
-// })
