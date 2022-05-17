@@ -1,4 +1,5 @@
 let players = []; // 所有玩家player
+let sortedPlayers = []; // 分數由高至低排序後的玩家player
 let bulletes = []; // 所有子彈
 let talkers = []; // 所有純聊天者talker
 let isPaused = false; // 是否暫停
@@ -15,23 +16,47 @@ function drawBulete(x, y, radius) { // 畫子彈
     ctx.closePath();
 }
 
-function updateMyScores(){ // 顯示分數
-    document.getElementById('my-scores').innerHTML="";
+function updateMyScores(){ // 顯示我的分數
+    document.getElementById('my-scores').innerHTML = "";
     if(isPaused === false){
-        document.getElementById('my-scores').innerHTML=me.scores;
+        document.getElementById('my-scores').innerHTML = me.scores;
+    }else{
+        document.getElementById('my-scores').innerHTML = me.scores+' PAUSE';
     }
-    document.getElementById('my-scores').innerHTML=me.scores+' PAUSE';
+}
+
+function updateLeaderboard(){ // 更新排行
+    document.getElementById('first-place-name').innerHTML = "";
+    document.getElementById('first-place-scores').innerHTML = "";
+    document.getElementById('second-place-name').innerHTML = "";
+    document.getElementById('second-place-scores').innerHTML = "";
+    document.getElementById('third-place-name').innerHTML = "";
+    document.getElementById('third-place-scores').innerHTML = "";
+    if(sortedPlayers[0]){
+        document.getElementById('first-place-name').innerHTML = sortedPlayers[0].name;
+        document.getElementById('first-place-scores').innerHTML = sortedPlayers[0].scores;
+    }
+    if(sortedPlayers[1]){
+        document.getElementById('second-place-name').innerHTML = sortedPlayers[1].name;
+        document.getElementById('second-place-scores').innerHTML = sortedPlayers[1].scores;
+    }
+    if(sortedPlayers[2]){
+        document.getElementById('third-place-name').innerHTML = sortedPlayers[2].name;
+        document.getElementById('third-place-scores').innerHTML = sortedPlayers[2].scores;
+    }
 }
 
 // 接收 server 傳來的同步資訊
 socket.on('playersInfo', (playersInfo)=>{ // 更新其他玩家資訊
     // console.log('收到的資料', playersInfo.players);
     players = playersInfo.players;
+    sortedPlayers = playersInfo.sortedPlayers;
     if(me.id !== "" && me.type === 0){
         me.scores = players.filter(player => player.id === me.id)[0].scores // 更新資料給 me
         // console.log(`${me.name}, 位置:(${me.x}, ${me.y}), 分數:${me.scores}`);
         updateMyScores();
     }
+    updateLeaderboard();
     // console.log("現在所有玩家資訊", players);
 })
 
@@ -42,7 +67,7 @@ socket.on('bulletesInfo', (bulletesInfo) => { // 更新子彈資訊
 
 socket.on('talkersInfo', (talkersInfo) => {
     talkers = talkersInfo.talkers;
-    console.log("現在所有純聊天者資訊", talkers);
+    // console.log("現在所有純聊天者資訊", talkers);
 })
 
 

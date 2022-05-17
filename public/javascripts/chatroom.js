@@ -39,9 +39,9 @@ socket.on('message', (msgInfo) => {
     }
     
     if(messenger){
-        if(msgInfo.msg === 'qwerttt'){
+        if(msgInfo.msg === '++'){
             isPaused = true;
-        }else if(msgInfo.msg === 'asdfggg'){
+        }else if(msgInfo.msg === '--'){
             isPaused = false;
         }else{
             let message = document.createElement('li');
@@ -53,17 +53,15 @@ socket.on('message', (msgInfo) => {
             }
             document.querySelector('ul').appendChild(message);
             // scrollbar 到最底部
-            document.querySelector('#chat-window').scrollTop = document.querySelector('#chat-window').scrollHeight;
-            
-            if(isChatWindowShow === false){ // 顯示聊天視窗
-                document.querySelector('#chat-window').classList.remove('hidden');
-                showChatWindow = setTimeout(hideChatroom, 5000)
-                isChatWindowShow = true;
-            }else{ // 已經顯示視窗 重置顯示 setTimeout
-                clearTimeout(showChatWindow);
-                showChatWindow = setTimeout(hideChatroom, 5000)
-            }
-            
+            document.querySelector('#chat-window').scrollTop = document.querySelector('#chat-window').scrollHeight;   
+        }
+        if(isChatWindowShow === false){ // 顯示聊天視窗
+            document.querySelector('#chat-window').classList.remove('hidden');
+            showChatWindow = setTimeout(hideChatroom, 5000)
+            isChatWindowShow = true;
+        }else{ // 已經顯示視窗 重置顯示 setTimeout
+            clearTimeout(showChatWindow);
+            showChatWindow = setTimeout(hideChatroom, 5000)
         }
     };
 })

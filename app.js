@@ -20,7 +20,7 @@ const io = new Server(server);
 // 伺服器遊戲資訊
 let playersInfo = { // 同一局遊戲中所有 玩家players 資訊
     'players':[],
-    'leaderboard':[],
+    'sortedPlayers':[],
 }
 let bulletesInfo = { // 同一局遊戲子彈資訊
     'bulletes':[]
@@ -139,9 +139,27 @@ function mainUpdate(){ // 更新 玩家 與 子彈 資訊
     }
 }
 
-// 更新排行榜
-
-
+// 依分數高低排序
+function updateLeaderboard(){
+    if(playersInfo.players.length > 0){
+        playersInfo.players.sort( (player1, player2) => (player2.scores - player1.scores) );
+        if(playersInfo.sortedPlayers !== playersInfo.players){
+            playersInfo.sortedPlayers = playersInfo.players
+            isPlayersInfoChanged = true;
+            if(playersInfo.sortedPlayers[0]){
+                console.log(`1st ${playersInfo.sortedPlayers[0].name} ${playersInfo.sortedPlayers[0].scores}`);
+            }
+            if(playersInfo.sortedPlayers[1]){
+                console.log(`2nd ${playersInfo.sortedPlayers[1].name} ${playersInfo.sortedPlayers[1].scores}`);
+            }
+            if(playersInfo.sortedPlayers[2]){
+                console.log(`3rd ${playersInfo.sortedPlayers[2].name} ${playersInfo.sortedPlayers[2].scores}`);
+            }
+            io.emit('playersInfo', playersInfo);
+        }
+    }
+}
+let leaderboardInfo = setInterval(updateLeaderboard, 5000);
 
 io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來源
     let startGetScore; // 宣告累積分數區域變數 玩家離線時可清除
@@ -213,9 +231,9 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
         console.log('後端收到的訊息', msg);
         // let me = playersInfo.players.find(player => player.id === socket.id)
         // msg = `${me.name} 說：${msg}`;
-        if(msg === 'qwerttt'){
+        if(msg === '++'){
             isPaused = true;
-        }else if(msg === 'asdfggg'){
+        }else if(msg === '--'){
             isPaused = false;
         }
         let msgInfo = {id: socket.id, msg: msg};
@@ -237,8 +255,8 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
 
     socket.on('start', () => { // 玩家正式加入遊戲(有 socket.id 後)
         startGetScore = setInterval(getScore, 1000); // 開始計時累積分數
-        let msgInfo = {id: socket.id, msg: "我來了！"};
-        io.emit('message', msgInfo);
+        // let msgInfo = {id: socket.id, msg: "我來了！"};
+        // io.emit('message', msgInfo);
         isPlayersInfoChanged = true;
     })
 

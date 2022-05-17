@@ -75,3 +75,37 @@ background: rgba(150, 150, 150, 0.3);
 ::-webkit-scrollbar-thumb:hover {
 background: rgba(240, 240, 240, 0.5);
 }
+
+/* Leaderboard */
+#leaderboard {
+    /* border: solid white 1px; */
+    position: absolute; top: 5px; left: 825px;
+    color: #fff;
+}
+td {
+    /* border: solid white 1px; */
+    padding: 5px;
+}
+.place {
+    width: 40px;
+}
+.name {
+    max-width: 80px;
+    width: 80px;
+    overflow: hidden;
+    text-overflow : ellipsis;
+    white-space: nowrap; /* 空格不要換行 */
+}
+.scores {
+    width: 40px;
+    text-align: right;
+}
+#first-place {
+    color:rgba(255, 255, 85, 0.7)
+}
+#second-place {
+    color:rgba(245, 245, 245, 0.7)
+}
+#third-place {
+    color:rgba(240, 120, 20, 0.7)
+}

@@ -6,15 +6,16 @@
   <link type="text/css" rel="stylesheet" href="/stylesheets/index.css">
 </head>
 <body>
-  
+  <!-- 聊天室視窗 & 輸入 & 按鈕 -->
   <div>
     <ul id="chat-window" class="hidden"></ul>
     <form>
       <input type="text" id="chat-input" class="hidden"><button id="chat-btn" class="hidden">Send</button>
     </form>
   </div>
-  
+  <!-- 主要畫布 -->
   <canvas id="game-canvas"></canvas>
+  <!-- 首頁畫面 -->
   <div id="play-menu" class="hidden">
     <div id="play-menu-item">
       <input type="text" id="userName-input" placeholder="Enter Your Name" />
@@ -22,8 +23,26 @@
       <button id="talk-button">純聊天</button>
     </div>
   </div>
+  <!-- 分數 只有 加入特訓 的玩家顯示-->
   <div id="my-scores-title" class="hidden">MY SCORES: <span id="my-scores">0</span></div>
-  <!-- <button id="temp">聊天</button> -->
+  <!-- 排行榜 顯示前 3 名 及 自己排行-->
+  <table id="leaderboard">
+    <tr>
+      <td class="place" id="first-place">1st</td>
+      <td class="name" id="first-place-name"></td>
+      <td class="scores" id="first-place-scores"></td>
+    </tr>
+    <tr>
+      <td class="place" id="second-place">2nd</td>
+      <td class="name" id="second-place-name"></td>
+      <td class="scores" id="second-place-scores"></td>
+    </tr>
+    <tr>
+      <td class="place" id="third-place">3rd</td>
+      <td class="name" id="third-place-name"></td>
+      <td class="scores" id="third-place-scores"></td>
+    </tr>
+  </table>
 
   <script src="/javascripts/globalSetting.js"></script>
   <script src="/socket.io/socket.io.js"></script>
