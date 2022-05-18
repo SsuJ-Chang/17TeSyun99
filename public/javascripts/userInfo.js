@@ -41,7 +41,7 @@ document.getElementById('play-button').addEventListener('click', function(e) {
 
 function start(){ // 正式開始
     socket.emit('start', 'start');
-    console.log("開始!!!!")
+    // console.log("開始!!!!")
 }
 
 // 接收 me socket.id 才正式開始

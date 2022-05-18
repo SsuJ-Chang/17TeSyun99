@@ -13,7 +13,7 @@ document.querySelector('#chat-btn').addEventListener('click', (e) => {
     e.preventDefault();
     if(document.querySelector("#chat-input").value){
         let msg = document.querySelector("#chat-input").value;
-        console.log('我說的話', msg);
+        // console.log('我說的話', msg);
         socket.emit('message', msg);
         document.querySelector("#chat-input").value = "";
         document.querySelector("#chat-input").blur(); // 離開聊天輸入框
