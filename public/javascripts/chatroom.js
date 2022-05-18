@@ -14,7 +14,9 @@ document.querySelector('#chat-btn').addEventListener('click', (e) => {
     if(document.querySelector("#chat-input").value){
         let msg = document.querySelector("#chat-input").value;
         // console.log('我說的話', msg);
-        socket.emit('message', msg);
+        if(me.name){
+            socket.emit('message', msg);
+        }
         document.querySelector("#chat-input").value = "";
         document.querySelector("#chat-input").blur(); // 離開聊天輸入框
         document.querySelector("#chat-input").classList.add("hidden");
