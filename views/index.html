@@ -18,15 +18,18 @@
   <!-- 首頁畫面 -->
   <div id="play-menu" class="hidden">
     <div id="play-menu-item">
-      <input type="text" id="userName-input" placeholder="Enter Your Name" />
-      <button id="play-button">加入特訓</button>
-      <button id="talk-button">純聊天</button>
+      <div id="game-name">特    訓</div>
+      <input type="text" id="userName-input" placeholder="暱稱（1 至 8 個文字）" />
+      <div id="user-type">
+        <button id="play-button">加入特訓</button>
+        <button id="talk-button">純聊天</button>
+      </div>
     </div>
   </div>
   <!-- 分數 只有 加入特訓 的玩家顯示-->
-  <div id="my-scores-title" class="hidden">MY SCORES: <span id="my-scores">0</span></div>
+  <div id="my-scores-title" class="hidden">特訓時間  <span id="my-scores">0</span></div>
   <!-- 排行榜 顯示前 3 名 及 自己排行-->
-  <table id="leaderboard">
+  <table id="leaderboard" class="hidden">
     <tr>
       <td class="place" id="first-place">1st</td>
       <td class="name" id="first-place-name"></td>

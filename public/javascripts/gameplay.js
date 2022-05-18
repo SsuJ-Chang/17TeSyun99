@@ -4,6 +4,12 @@ let bulletes = []; // 所有子彈
 let talkers = []; // 所有純聊天者talker
 let isPaused = false; // 是否暫停
 
+function drawPause(){
+    ctx.fillStyle = "rgba(0, 205, 205, 0.8)";
+    ctx.font = "bold 108px sans-serif";
+    ctx.fillText("遊戲暫停", canvas.width/3.5, 330);
+}
+
 function calculateDistance(playerX, playerY, bulleteX, bulleteY){ // 計算子彈和球的距離
     let distance = Math.sqrt((playerX-bulleteX)**2+(playerY-bulleteY)**2)
     return distance
@@ -11,18 +17,16 @@ function calculateDistance(playerX, playerY, bulleteX, bulleteY){ // 計算子�
 
 function drawBulete(x, y, radius) { // 畫子彈
     ctx.beginPath();
+    ctx.lineWidth = 3; // 設定線條寬度
     ctx.arc(x, y, radius, 0, Math.PI*2); // x, y 座標的繪圖起始位置即為子彈的位置
-    ctx.fill();
+    ctx.strokeStyle = "rgba(255, 0, 0, 0.8)";
+    ctx.stroke();
     ctx.closePath();
 }
 
 function updateMyScores(){ // 顯示我的分數
     document.getElementById('my-scores').innerHTML = "";
-    if(isPaused === false){
-        document.getElementById('my-scores').innerHTML = me.scores;
-    }else{
-        document.getElementById('my-scores').innerHTML = me.scores+' PAUSE';
-    }
+    document.getElementById('my-scores').innerHTML = me.scores;
 }
 
 function updateLeaderboard(){ // 更新排行
@@ -47,7 +51,7 @@ function updateLeaderboard(){ // 更新排行
 }
 
 // 接收 server 傳來的同步資訊
-socket.on('playersInfo', (playersInfo)=>{ // 更新其他玩家資訊
+socket.on('playersInfo', (playersInfo)=>{ // 更新所有玩家資訊 包含排行
     // console.log('收到的資料', playersInfo.players);
     players = playersInfo.players;
     sortedPlayers = playersInfo.sortedPlayers;
@@ -65,7 +69,7 @@ socket.on('bulletesInfo', (bulletesInfo) => { // 更新子彈資訊
     // console.log('全部的子彈', bulletes);
 })
 
-socket.on('talkersInfo', (talkersInfo) => {
+socket.on('talkersInfo', (talkersInfo) => { // 更新所有純聊天者資訊
     talkers = talkersInfo.talkers;
     // console.log("現在所有純聊天者資訊", talkers);
 })
@@ -95,19 +99,26 @@ function checkHitByPlayer(player){ // 判定是否碰到其他玩家
     }
 }
 
+// 玩家狀態：移動方向是否變化、座標與移動量
 let isDirectionChanged = false;
 let lastX = 0;
 let lastY = 0;
 let lastDx = 0;
 let lastDy = 0;
 
+// 指定背景圖片物件
+let backgroundImg = new Image();
+backgroundImg.src = '/images/stars02.png';
+
 function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render 位置 並將碰撞計算在內
     ctx.clearRect(0, 0, canvas.width, canvas.height); // 清除 canvas
+    ctx.drawImage(backgroundImg, 0, 0); // render 背景圖
+    
     isDirectionChanged = false;
     lastX = me.x;
     lastY = me.y;
 
-    // render 自己
+    // 如果是使用者是玩家就 render 自己
     if(me.type === 0){
         drawBall(me.x, me.y, me.color);
         drawName(me.name, me.x, me.y);
@@ -204,7 +215,9 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
         socket.emit('move', me);
     }
     
-    
+    if(isPaused === true){
+        drawPause();
+    }
     // 監聽滑鼠位置
     // window.addEventListener('mousemove', (e) => {
     //     if(e.pageX > me.x){

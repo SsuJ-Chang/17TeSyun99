@@ -19,15 +19,36 @@ body {
 }
 
 #play-menu-item {
-    position: relative; top:250px; left: 370px; 
+    display:grid;
+    grid-template-rows: 350px 80px 1fr;
+    justify-content:center;
+    align-items: center;
+}
+
+#game-name {
+    font-size: 144px; color:rgba(250, 250, 250, 0.75); font-weight: bolder;
+    margin: auto; text-shadow: 2px 2px 10px rgb(5, 124, 124);
 }
 
 #userName-input {
-    outline: none; width: 200px; height: 30px;
+    outline: none; width: 200px; height: 40px; margin: auto;
+    font-size: 16px; opacity: 0.7; font-weight: 400; color: #333;
+    border-radius: 5px; padding: 5px;
 }
 
+#user-type {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: auto;
+}
 #play-button, #talk-button {
-    width: 100px; height: 30px;
+    width: 120px; height: 50px; margin: 10px; background-color: #999;
+    font-weight: bold; color: rgb(5, 124, 124); font-size: 18px;
+    border-radius: 5px; border: 0; text-shadow: 1px 1px 1px #444;
+}
+
+#play-button:hover, #talk-button:hover {
+    background-color: #ddd;
 }
 
 .hidden {
@@ -39,10 +60,10 @@ body {
 }
 
 #chat-window {
-    width: 350px; height:200px;
+    width: 320px; height: 160px;
     background-color: rgba(0, 0, 0, 0.3);
     color: #fff;
-    position: absolute; top: 370px; left: 10px; z-index: 10;
+    position: absolute; top: 410px; left: 10px; z-index: 10;
     list-style-type: none;
     overflow: scroll;
     overflow-x: hidden;
@@ -53,7 +74,7 @@ body {
 }
 
 #chat-input {
-    width: 350px; outline: none;
+    width: 320px; outline: none;
     position: absolute; top:575px; left: 10px; z-index: 20;
     color-scheme: dark; opacity: 0.3;
 }
@@ -79,7 +100,7 @@ background: rgba(240, 240, 240, 0.5);
 /* Leaderboard */
 #leaderboard {
     /* border: solid white 1px; */
-    position: absolute; top: 5px; left: 825px;
+    position: absolute; top: 5px; left: 790px;
     color: #fff;
 }
 td {
@@ -87,17 +108,17 @@ td {
     padding: 5px;
 }
 .place {
-    width: 40px;
+    width: 35px;
 }
 .name {
-    max-width: 80px;
-    width: 80px;
+    max-width: 125px;
+    width: 125px;
     overflow: hidden;
     text-overflow : ellipsis;
     white-space: nowrap; /* 空格不要換行 */
 }
 .scores {
-    width: 40px;
+    width: 35px;
     text-align: right;
 }
 #first-place {

@@ -1,6 +1,6 @@
 // 球的位置
-let x = getRandom(100, 900);
-let y = getRandom(100, 500);
+let x;
+let y;
 
 // 碰撞尺寸 同等於 球的半徑
 let ballRadius = 15;
@@ -14,8 +14,8 @@ function drawBall(x, y, color) { // 畫球
 }
 function drawName(name, x, y) { //  畫跟著球的名字
     ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
-    ctx.font = "bold 20px sans-serif";
-    ctx.fillText(name, x-15, y-20);
+    ctx.font = "bold 18px sans-serif";
+    ctx.fillText(name, x, y-20);
 }
 
 

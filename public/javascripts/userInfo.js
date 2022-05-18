@@ -13,25 +13,33 @@ socket.on('login', ()=>{
 document.getElementById('play-button').addEventListener('click', function(e) {
     e.preventDefault();
     if (userName.value) {
-        me.type = 0;
-        console.log('輸入名稱', userName.value);
-        me.name = userName.value;
-        let color = "111111";
-        while(color === "111111"){
-            color = Math.floor(Math.random()*16777215).toString(16); // 隨機顏色
-        };
-        me.color = `#${color}`;
-
-    console.log('登入玩家資訊', me);
-    document.getElementById('play-menu').classList.add('hidden');
-    document.getElementById('my-scores-title').classList.remove('hidden');
-    socket.emit('playerInit', me);
-
+        if(/^[\u4E00-\u9FD50-9A-Za-z_]{1,8}$/i.test(userName.value)){ // 檢查輸入格式是否正確
+            me.type = 0;
+            x = getRandom(100, 900);
+            me.x = x;
+            y = getRandom(100, 500);
+            me.y = y;
+            console.log('輸入名稱', userName.value);
+            me.name = userName.value;
+            let color = "111111";
+            while(color === "111111"){
+                color = Math.floor(Math.random()*16777215).toString(16); // 隨機顏色
+            };
+            me.color = `#${color}`;
+            console.log('登入玩家資訊', me);
+            document.getElementById('play-menu').classList.add('hidden');
+            document.getElementById('my-scores-title').classList.remove('hidden');
+            document.getElementById('leaderboard').classList.remove('hidden');
+            socket.emit('playerInit', me);
+        }else{
+            document.location.reload();
+            alert("請輸入 1 至 8 個文字");
+            return;
+        }
     }
 });
 
 function start(){ // 正式開始
-    // setInterval( getScore, 1000);
     socket.emit('start', 'start');
     console.log("開始!!!!")
 }
@@ -48,14 +56,19 @@ socket.on('socketId', (id) => {
 document.getElementById('talk-button').addEventListener('click', function(e) {
     e.preventDefault();
     if (userName.value) {
-        me.type = 1;
-        console.log('輸入名稱', userName.value);
-        me.name = userName.value;
-        me.color = '#777';
-
-    console.log('登入純聊天者資訊', me);
-    document.getElementById('play-menu').classList.add('hidden');
-    socket.emit('talkerInit', me);
-
+        if(/^[\u4E00-\u9FD50-9A-Za-z_]{1,8}$/i.test(userName.value)){
+            me.type = 1;
+            console.log('輸入名稱', userName.value);
+            me.name = userName.value;
+            me.color = '#777';
+            console.log('登入純聊天者資訊', me);
+            document.getElementById('play-menu').classList.add('hidden');
+            document.getElementById('leaderboard').classList.remove('hidden');
+            socket.emit('talkerInit', me);
+        }else{
+            document.location.reload();
+            alert("請輸入 1 至 8 個文字");
+            return;
+        }
     }
 });

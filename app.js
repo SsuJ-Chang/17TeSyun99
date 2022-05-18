@@ -208,8 +208,6 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
         socket.emit('socketId', socket.id); // 重要！一定要先給 client 才能更新資料給該玩家！
         isTalkersInfoChanged = true;
         socket.emit('talkersInfo', talkersInfo);
-        // let msgInfo = {id: socket.id, msg: "我來了！"};
-        // io.emit('message', msgInfo);
     })
 
 
@@ -255,8 +253,6 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
 
     socket.on('start', () => { // 玩家正式加入遊戲(有 socket.id 後)
         startGetScore = setInterval(getScore, 1000); // 開始計時累積分數
-        // let msgInfo = {id: socket.id, msg: "我來了！"};
-        // io.emit('message', msgInfo);
         isPlayersInfoChanged = true;
     })
 
