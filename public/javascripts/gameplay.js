@@ -6,8 +6,8 @@ let isPaused = false; // 是否暫停
 
 function drawPause(){
     ctx.fillStyle = "rgba(0, 205, 205, 0.8)";
-    ctx.font = "bold 108px sans-serif";
-    ctx.fillText("遊戲暫停", canvas.width/3.5, 330);
+    ctx.font = "bold 48px sans-serif";
+    ctx.fillText("- 遊戲暫停 -", 400, 300);
 }
 
 function calculateDistance(playerX, playerY, bulleteX, bulleteY){ // 計算子彈和球的距離
