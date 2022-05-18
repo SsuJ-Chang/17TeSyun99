@@ -171,6 +171,7 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
 
     socket.on('disconnect', () => { // 離線事件 依照 socket.id 過濾(刪除)玩家
         console.log(`使用者離線 id=${socket.id}`);
+        clearInterval(startGetScore); // 停止計算分數
 
         let disconnectPlayer = playersInfo.players.find(player => player.id === socket.id);
         playersInfo.players = playersInfo.players.filter(player => player != disconnectPlayer);
@@ -186,7 +187,7 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
             socket.emit('talkersInfo', talkersInfo);
             isTalkersInfoChanged = true;
         }
-        let msgInfo = {id: socket.id, msg: "掰掰！"};
+        let msgInfo = {id: socket.id, msg: "我悄悄的離開..."};
         io.emit('message', msgInfo)
     })
 
@@ -209,7 +210,6 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
         isTalkersInfoChanged = true;
         socket.emit('talkersInfo', talkersInfo);
     })
-
 
     socket.on('move', (movePlayer) => { // 玩家鍵盤移動事件
         let updatePlayer = playersInfo.players.find(player => player.id === movePlayer.id)
