@@ -256,13 +256,6 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
         isPlayersInfoChanged = true;
     })
 
-    socket.on('stop', () => { // 玩家死亡結束
-        let msgInfo = {id: socket.id, msg: "我死了！可惡！"};
-        io.emit('message', msgInfo)
-        clearInterval(startGetScore);
-        isPlayersInfoChanged = true;
-    })
-
     function getScore(){ // server 端計算得分
         if(isPaused === false){
             if(socket.id){

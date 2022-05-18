@@ -79,22 +79,18 @@ function checkHitByBullete(bullete){ // 判定是否碰到子彈
     if(bullete && me.id && me.type === 0){ // 子彈與 me 必須還存在
         // console.log(calculateDistance(me.x, me.y, bullete.x, bullete.y))
         if(calculateDistance(me.x, me.y, bullete.x, bullete.y) <= ballRadius+bullete.radius){
-            socket.emit('stop', 'stop');
             socket.disconnect()
             document.location.reload();
             alert(`你被子彈打中了，存活了 ${me.scores} 秒。`);
-            // clearInterval(renderInterval);
         }
     }
 }
 function checkHitByPlayer(player){ // 判定是否碰到其他玩家
     if(player && me.id && me.type === 0){ // 其他玩家與 me 必須還存在
         if(calculateDistance(me.x, me.y, player.x, player.y) <= ballRadius * 2){
-            socket.emit('stop', 'stop');
             socket.disconnect()
             document.location.reload();
             alert(`你撞到別人了，存活了 ${me.scores} 秒。`);
-            // clearInterval(renderInterval);
         }
     }
 }
