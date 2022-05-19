@@ -17,10 +17,12 @@ function calculateDistance(playerX, playerY, bulleteX, bulleteY){ // 計算子�
 
 function drawBulete(x, y, radius) { // 畫子彈
     ctx.beginPath();
-    ctx.lineWidth = 3; // 設定線條寬度
+    let radialgradient = ctx.createRadialGradient(x, y, 0.5, x, y, radius); // 設定漸層
+    radialgradient.addColorStop(0, '#fff');
+    radialgradient.addColorStop(1, 'rgba(255, 50, 0 , 0.9)');
     ctx.arc(x, y, radius, 0, Math.PI*2); // x, y 座標的繪圖起始位置即為子彈的位置
-    ctx.strokeStyle = "rgba(255, 0, 0, 0.8)";
-    ctx.stroke();
+    ctx.fillStyle = radialgradient;
+    ctx.fill();
     ctx.closePath();
 }
 
