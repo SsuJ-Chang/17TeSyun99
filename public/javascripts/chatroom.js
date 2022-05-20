@@ -5,6 +5,9 @@ document.addEventListener('keydown', (e) => { // 按下 Enter 自動進入聊天
             document.querySelector("#chat-input").focus();
             document.querySelector('#chat-window').classList.remove('hidden');
             isChatWindowShow = true;
+        }else if(!document.querySelector("#chat-input").value && document.querySelector("#chat-input").className !== "hidden"){
+            document.querySelector("#chat-input").blur(); // 離開聊天輸入框
+            document.querySelector("#chat-input").classList.add("hidden");
         }
     }
 })
