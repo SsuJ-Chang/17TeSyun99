@@ -60,7 +60,7 @@ document.getElementById('talk-button').addEventListener('click', function(e) {
             me.type = 1;
             console.log('輸入名稱', userName.value);
             me.name = userName.value;
-            me.color = '#777';
+            me.color = '#aaa';
             console.log('登入純聊天者資訊', me);
             document.getElementById('play-menu').classList.add('hidden');
             document.getElementById('leaderboard').classList.remove('hidden');

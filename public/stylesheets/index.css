@@ -68,7 +68,6 @@ body {
     overflow: scroll;
     overflow-x: hidden;
 }
-
 #chat-window>li {
     word-wrap:break-word;
 }
@@ -76,9 +75,8 @@ body {
 #chat-input {
     width: 320px; outline: none;
     position: absolute; top:565px; left: 10px; z-index: 20;
-    color-scheme: dark; opacity: 0.3;
+    color-scheme: dark; opacity: 0.7;
 }
-
 #chat-btn {
     position: absolute; top:565px; left: 370px; z-index: 20;
 }
