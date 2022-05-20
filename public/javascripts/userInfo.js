@@ -1,7 +1,7 @@
 let socket = io();
 
 // 玩家資訊
-let userName = document.getElementById('userName-input');
+let userName = document.getElementById('username-input');
 let me = {'type':0, 'id':'', 'name':'', 'color':'#111111', 'x':x, 'y':y, 'hp':100, 'scores':0, "dx":0, "dy":0} // 要同步的自身玩家資訊
 
 // 連線進入開啟「起始畫面」選單

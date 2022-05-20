@@ -30,9 +30,9 @@ body {
     margin: auto; text-shadow: 2px 2px 10px rgb(5, 124, 124);
 }
 
-#userName-input {
+#username-input {
     outline: none; width: 200px; height: 40px; margin: auto;
-    font-size: 16px; opacity: 0.7; font-weight: 400; color: #333;
+    font-size: 16px; font-weight: 400; color: #333;
     border-radius: 5px; padding: 5px;
 }
 
@@ -43,7 +43,7 @@ body {
 }
 #play-button, #talk-button {
     width: 120px; height: 50px; margin: 10px; background-color: #999;
-    font-weight: bold; color: rgb(5, 124, 124); font-size: 18px;
+    color: rgb(0, 150, 150); font-size: 18px;
     border-radius: 5px; border: 0; text-shadow: 1px 1px 1px #444;
 }
 
@@ -63,7 +63,7 @@ body {
     width: 320px; height: 160px;
     background-color: rgba(0, 0, 0, 0.3);
     color: #fff;
-    position: absolute; top: 410px; left: 10px; z-index: 10;
+    position: absolute; top: 400px; left: 10px; z-index: 10;
     list-style-type: none;
     overflow: scroll;
     overflow-x: hidden;
@@ -75,12 +75,12 @@ body {
 
 #chat-input {
     width: 320px; outline: none;
-    position: absolute; top:575px; left: 10px; z-index: 20;
+    position: absolute; top:565px; left: 10px; z-index: 20;
     color-scheme: dark; opacity: 0.3;
 }
 
 #chat-btn {
-    position: absolute; top:575px; left: 370px; z-index: 20;
+    position: absolute; top:565px; left: 370px; z-index: 20;
 }
 
 /* scrollbar 設定 */
