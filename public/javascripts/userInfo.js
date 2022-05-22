@@ -3,6 +3,11 @@ let socket = io();
 // 玩家資訊
 let userName = document.getElementById('username-input');
 let me = {'type':0, 'id':'', 'name':'', 'color':'#111111', 'x':x, 'y':y, 'hp':100, 'scores':0, "dx":0, "dy":0} // 要同步的自身玩家資訊
+let isInvincible = true; // 是否無敵
+function cancelInvincible(){
+    isInvincible = false;
+}
+
 
 // 連線進入開啟「起始畫面」選單
 socket.on('login', ()=>{
@@ -40,6 +45,7 @@ document.getElementById('play-button').addEventListener('click', function(e) {
 });
 
 function start(){ // 正式開始
+    let invincible = setTimeout(cancelInvincible ,5000);
     socket.emit('start', 'start');
     // console.log("開始!!!!")
 }

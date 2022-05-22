@@ -17,7 +17,14 @@ function drawName(name, x, y) { //  畫跟著球的名字
     ctx.font = "bold 18px sans-serif";
     ctx.fillText(name, x, y-20);
 }
-
+function drawInvincible(x, y) { // 畫無敵效果
+    let randomSize = getRandom(4, 6);
+    ctx.beginPath();
+    ctx.arc(x, y, (ballRadius + randomSize), 0, Math.PI*2); // x, y 座標的繪圖起始位置即為圖的位置
+    ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+    ctx.fill();
+    ctx.closePath();
+}
 
 // 設定鍵盤按鍵按壓狀態 預設為 false
 let rightPressed = false;

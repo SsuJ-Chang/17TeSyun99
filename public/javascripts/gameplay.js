@@ -116,8 +116,11 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     lastX = me.x;
     lastY = me.y;
 
-    // 如果是使用者是玩家就 render 自己
+    // 如果使用者是玩家就 render 自己
     if(me.type === 0){
+        if(isInvincible === true){
+            drawInvincible(me.x, me.y);
+        }
         drawBall(me.x, me.y, me.color);
         drawName(me.name, me.x, me.y);
     }
@@ -147,10 +150,14 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     }
 
     // 計算子彈和 me 的是否碰撞 有則結束遊戲
-    bulletes.forEach( bullete => checkHitByBullete(bullete) );
+    if(isInvincible === false){
+        bulletes.forEach( bullete => checkHitByBullete(bullete) );
+    }
 
     // 計算其他玩家和 me 的是否碰撞 有則結束遊戲
-    others.forEach( player => checkHitByPlayer(player) );
+    if(isInvincible === false){
+        others.forEach( player => checkHitByPlayer(player) );
+    }
 
     // 用鍵盤操控玩家球的移動距離與限制(碰撞)
     if(rightPressed) {
@@ -189,17 +196,15 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     me.x = x;
     me.y = y;
     
-    // 位置沒有改變
+    // 座標是否改變
     if(lastX === me.x){
         me.dx = 0;
-        isDirectionChanged = true;
     }
     if(lastY === me.y){
         me.dy = 0;
-        isDirectionChanged = true;
     }
 
-    // 位移量改變
+    // 位移量是否改變
     if(me.dx !== lastDx){
         lastDx = me.dx;
         isDirectionChanged = true;

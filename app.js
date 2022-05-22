@@ -179,12 +179,9 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
         talkersInfo.talkers = talkersInfo.talkers.filter(talker => talker != disconnectTalker);
         
         if(disconnectPlayer !== undefined){
-            // console.log('有玩家離線，當前玩家', playersInfo.players);
-            socket.emit('playersInfo', playersInfo);
+            io.emit('playersInfo', playersInfo)
             isPlayersInfoChanged = true;
         }else{
-            // console.log('有使用者離線 當前純聊天者', talkersInfo.talkers);
-            socket.emit('talkersInfo', talkersInfo);
             isTalkersInfoChanged = true;
         }
         let msgInfo = {id: socket.id, msg: "我悄悄的離開..."};
