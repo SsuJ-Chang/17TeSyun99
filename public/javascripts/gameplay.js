@@ -199,9 +199,13 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     // 座標是否改變
     if(lastX === me.x){
         me.dx = 0;
+    }else{
+        isDirectionChanged = true;
     }
     if(lastY === me.y){
         me.dy = 0;
+    }else{
+        isDirectionChanged = true;
     }
 
     // 位移量是否改變
