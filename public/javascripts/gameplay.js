@@ -59,11 +59,10 @@ socket.on('playersInfo', (playersInfo)=>{ // 更新所有玩家資訊 包含排�
     sortedPlayers = playersInfo.sortedPlayers;
     if(me.id !== "" && me.type === 0){
         me.scores = players.filter(player => player.id === me.id)[0].scores // 更新資料給 me
-        // console.log(`${me.name}, 位置:(${me.x}, ${me.y}), 分數:${me.scores}`);
         updateMyScores();
     }
     updateLeaderboard();
-    // console.log("現在所有玩家資訊", players);
+    console.log("現在所有玩家資訊", players);
 })
 
 socket.on('bulletesInfo', (bulletesInfo) => { // 更新子彈資訊
@@ -81,7 +80,9 @@ function checkHitByBullete(bullete){ // 判定是否碰到子彈
     if(bullete && me.id && me.type === 0){ // 子彈與 me 必須還存在
         // console.log(calculateDistance(me.x, me.y, bullete.x, bullete.y))
         if(calculateDistance(me.x, me.y, bullete.x, bullete.y) <= ballRadius+bullete.radius){
-            socket.disconnect()
+            me.hp -= 100;
+            socket.emit('hit', me);
+            socket.disconnect();
             document.location.reload();
             alert(`你被子彈打中了，存活了 ${me.scores} 秒。`);
         }
@@ -90,6 +91,8 @@ function checkHitByBullete(bullete){ // 判定是否碰到子彈
 function checkHitByPlayer(player){ // 判定是否碰到其他玩家
     if(player && me.id && me.type === 0){ // 其他玩家與 me 必須還存在
         if(calculateDistance(me.x, me.y, player.x, player.y) <= ballRadius * 2){
+            me.hp -= 100;
+            socket.emit('hit', me);
             socket.disconnect()
             document.location.reload();
             alert(`你撞到別人了，存活了 ${me.scores} 秒。`);
@@ -125,7 +128,7 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
         drawName(me.name, me.x, me.y);
     }
 
-    let others = players.filter( player => player.id !== me.id); 
+    let others = players.filter( player => player.id !== me.id && player.hp !== 0); 
     // render 其他玩家
     others.forEach( player => drawBall(player.x, player.y, player.color) );
     others.forEach( player => drawName(player.name, player.x, player.y) );

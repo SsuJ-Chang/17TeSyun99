@@ -262,6 +262,11 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
         }
     }
 
+    socket.on('hit', (hitPlayer) => { // 玩家碰到子彈或其他玩家
+        let updatePlayer = playersInfo.players.find( player => player.id === socket.id);
+        updatePlayer.hp = hitPlayer.hp;
+        isPlayersInfoChanged = true;
+    })
 })
 
 
