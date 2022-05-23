@@ -1,11 +1,11 @@
-document.addEventListener('keydown', (e) => { // 按下 Enter 自動進入聊天輸入框
-    if(e.key == "Enter") {
+document.addEventListener('keydown', (e) => { // 熱鍵 Enter 的行為
+    if(e.key == "Enter") { // input 沒有顯示就開啟 並自動進入待輸入狀態(focus)
         if(document.querySelector("#chat-input").className === "hidden"){
             document.querySelector("#chat-input").classList.remove("hidden");
             document.querySelector("#chat-input").focus();
             document.querySelector('#chat-window').classList.remove('hidden');
             isChatWindowShow = true;
-        }else if(!document.querySelector("#chat-input").value && document.querySelector("#chat-input").className !== "hidden"){
+        }else if(!document.querySelector("#chat-input").value && document.querySelector("#chat-input").className !== "hidden"){ // input 顯示且沒有輸入任何內容時 就關閉顯示
             document.querySelector("#chat-input").blur(); // 離開聊天輸入框
             document.querySelector("#chat-input").classList.add("hidden");
         }
