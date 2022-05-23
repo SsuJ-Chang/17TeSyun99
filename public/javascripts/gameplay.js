@@ -80,7 +80,7 @@ function checkHitByBullete(bullete){ // 判定是否碰到子彈
     if(bullete && me.id && me.type === 0){ // 子彈與 me 必須還存在
         // console.log(calculateDistance(me.x, me.y, bullete.x, bullete.y))
         if(calculateDistance(me.x, me.y, bullete.x, bullete.y) <= ballRadius+bullete.radius){
-            me.hp -= 100;
+            me.hp -= 100; // 扣 hp
             socket.emit('hit', me);
             socket.disconnect();
             document.location.reload();
@@ -91,7 +91,7 @@ function checkHitByBullete(bullete){ // 判定是否碰到子彈
 function checkHitByPlayer(player){ // 判定是否碰到其他玩家
     if(player && me.id && me.type === 0){ // 其他玩家與 me 必須還存在
         if(calculateDistance(me.x, me.y, player.x, player.y) <= ballRadius * 2){
-            me.hp -= 100;
+            me.hp -= 100; // 扣 hp
             socket.emit('hit', me);
             socket.disconnect()
             document.location.reload();
