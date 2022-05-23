@@ -55,14 +55,14 @@ function updateLeaderboard(){ // 更新排行
 // 接收 server 傳來的同步資訊
 socket.on('playersInfo', (playersInfo)=>{ // 更新所有玩家資訊 包含排行
     // console.log('收到的資料', playersInfo.players);
-    players = playersInfo.players;
-    sortedPlayers = playersInfo.sortedPlayers;
+    players = playersInfo.players.filter( player => player.hp > 0 );
+    sortedPlayers = playersInfo.sortedPlayers.filter( player => player.hp > 0 );
     if(me.id !== "" && me.type === 0){
         me.scores = players.filter(player => player.id === me.id)[0].scores // 更新資料給 me
         updateMyScores();
     }
     updateLeaderboard();
-    console.log("現在所有玩家資訊", players);
+    // console.log("現在所有玩家資訊", players);
 })
 
 socket.on('bulletesInfo', (bulletesInfo) => { // 更新子彈資訊
@@ -128,7 +128,7 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
         drawName(me.name, me.x, me.y);
     }
 
-    let others = players.filter( player => player.id !== me.id && player.hp !== 0); 
+    let others = players.filter( player => player.id !== me.id && player.hp > 0); 
     // render 其他玩家
     others.forEach( player => drawBall(player.x, player.y, player.color) );
     others.forEach( player => drawName(player.name, player.x, player.y) );
