@@ -79,7 +79,7 @@ socket.on('talkersInfo', (talkersInfo) => { // 更新所有純聊天者資訊
 function checkHitByBullete(bullete){ // 判定是否碰到子彈
     if(bullete && me.id && me.type === 0){ // 子彈與 me 必須還存在
         // console.log(calculateDistance(me.x, me.y, bullete.x, bullete.y))
-        if(calculateDistance(me.x, me.y, bullete.x, bullete.y) <= ballRadius+bullete.radius){
+        if(calculateDistance(me.x, me.y, bullete.x, bullete.y) < ballRadius+bullete.radius){
             me.hp -= 100; // 扣 hp
             socket.emit('hit', me);
             socket.disconnect();
@@ -90,7 +90,7 @@ function checkHitByBullete(bullete){ // 判定是否碰到子彈
 }
 function checkHitByPlayer(player){ // 判定是否碰到其他玩家
     if(player && me.id && me.type === 0){ // 其他玩家與 me 必須還存在
-        if(calculateDistance(me.x, me.y, player.x, player.y) <= ballRadius * 2){
+        if(calculateDistance(me.x, me.y, player.x, player.y) < ballRadius * 2){
             me.hp -= 100; // 扣 hp
             socket.emit('hit', me);
             socket.disconnect()
@@ -127,7 +127,7 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
         drawBall(me.x, me.y, me.color);
         drawName(me.name, me.x, me.y);
     }
-
+    // 過濾 自己 取得 其他活著的玩家
     let others = players.filter( player => player.id !== me.id && player.hp > 0); 
     // render 其他玩家
     others.forEach( player => drawBall(player.x, player.y, player.color) );
