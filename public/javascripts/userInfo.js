@@ -1,4 +1,4 @@
-let socket = io();
+let socket = io({ 'transports': ['websocket'] }); // 直接指定以 websocket 連線
 
 // 玩家資訊
 let userName = document.getElementById('username-input');
