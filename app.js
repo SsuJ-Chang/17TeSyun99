@@ -29,10 +29,7 @@ let talkersInfo = { // 同一局遊戲所有 純聊天者talkers 資訊
     'talkers':[]
 }
 
-// 隨機亂數 function 可以練習外部引入
-function getRandom(min, max){
-    return Math.floor(Math.random() * (max - min)) + min;
-};
+const getRandom = require('./global-functions');
 
 // 是否暫停
 let isPaused = false;
