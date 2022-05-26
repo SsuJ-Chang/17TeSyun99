@@ -1,11 +1,14 @@
+//
 const express = require('express');
 const app = express();
 app.use(express.static(__dirname + '/public'));
 
+// 建立原生 Node.js http server
 const http = require('http');
 const { isObject } = require('util');
 const server = http.createServer(app);
 
+// 設定路徑 / 接收方法 GET 的請求(req)與回應結果(res)
 app.get('/', (req, res)=>{
     res.sendFile(__dirname + '/views/index.html');
 })
@@ -28,6 +31,10 @@ let bulletesInfo = { // 同一局遊戲子彈資訊
 let talkersInfo = { // 同一局遊戲所有 純聊天者talkers 資訊
     'talkers':[]
 }
+let maxConcurrentPlayers = 0; // 開機以最高同上玩家
+let time = new Date(); // 伺服器時間
+
+const fs = require('fs'); // 引入 File Sysyem Module
 
 const getRandom = require('./global-functions');
 
@@ -189,6 +196,12 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
     socket.on('playerInit', (player) => { // player 初始化資料
         let newPlayer = {'type': 0,'id':socket.id, 'name':player.name, 'color':player.color, 'x':player.x, 'y':player.y, 'hp':player.hp, 'scores':player.scores, 'dx':player.dx, 'dy':player.dy}
         playersInfo.players.push(newPlayer);
+        if(playersInfo.players.length > maxConcurrentPlayers){
+            maxConcurrentPlayers += 1;
+            console.log('Server 最高同上', maxConcurrentPlayers);
+            let recordingTime = time.getFullYear() + "/" + (time.getMonth() + 1) + "/" + time.getDate() + " - " + time.getHours( ) + ":" + time.getMinutes() + ":" + time.getSeconds();
+            fs.writeFileSync('./server-log.txt', `最高同上玩家 ${maxConcurrentPlayers}    ${recordingTime}`); // 寫入 log
+        }
         console.log('新玩家加入 當前玩家', playersInfo.players);
         socket.emit('socketId', socket.id); // 重要！一定要先給 client 才能更新資料給該玩家！
         socket.emit('playersInfo', playersInfo);
