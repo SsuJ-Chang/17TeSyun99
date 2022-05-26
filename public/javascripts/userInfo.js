@@ -1,4 +1,6 @@
-let socket = io({ 'transports': ['websocket'] }); // 直接指定以 websocket 連線
+// const domain = "http://52.7.185.223:3099";
+const domain = "http://localhost:3099";
+const socket = io(`${domain}`, {'transports': ['websocket']}); // 直接指定以 websocket 連線
 
 // 玩家資訊
 let userName = document.getElementById('username-input');
