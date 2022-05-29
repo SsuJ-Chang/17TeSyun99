@@ -3,6 +3,7 @@
 <head>
   <title>17特訓99</title>
   <meta charset="utf-8" />
+  <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
   <link type="text/css" rel="stylesheet" href="/stylesheets/index.css">
 </head>
 <body>
@@ -20,10 +21,46 @@
     <div id="play-menu-item">
       <div id="game-name">特    訓</div>
       <input type="text" id="username-input" placeholder="暱稱（1 至 8 個文字）" />
-      <div id="user-type">
-        <button id="play-button">加入特訓</button>
-        <button id="talk-button">純聊天</button>
+      <!-- 進入主要按鈕 -->
+      <div id="enter-btn">
+        <div id="user-type">
+          <button id="play-button">加入特訓</button>
+          <button id="talk-button">純聊天</button>
+        </div>
       </div>
+      <!-- 會員功能 -->
+      <div id="member-func">
+        <!-- 登入 -->
+        <div id="signin" class="hidden">
+          <div id="signin-inputs">
+            <input type="text" id="siginin-acc" class="input" placeholder="請輸入帳號" />
+            <input type="password" id="siginin-pw" class="input" placeholder="請輸入密碼" />
+            <button id="signin-btn" class="btn">登入</button>
+            <div id="google">
+              <div id="google-signin"></div>
+            </div>
+            <div id="switch-signup">還沒帳號？點此註冊。</div>
+          </div>
+        </div>
+        <!-- 註冊 -->
+        <div id="signup" class="hidden">
+          <div id="signup-inputs">
+            <input type="text" id="signup-acc" class="input" placeholder="請輸入帳號" />
+            <input type="password" id="signup-pw" class="input" placeholder="請輸入密碼" />
+            <input type="text" id="signup-nickname" class="input" placeholder="請輸入暱稱（1 至 8 個文字）" />
+            <button id="signup-btn" class="btn">註冊</button>
+            <div id="switch-signin">已經有帳號了，點此登入。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 會員資訊 -->
+  <div id="member-info" class="hidden">
+    <div id="member-info-items">
+      <div id="member-name">我的暱稱</div>
+      <div id="member-detail">[ 詳細資料 ]</div>
+      <div id="logout">[ 登出 ]</div>
     </div>
   </div>
   <!-- 分數 只有 加入特訓 的玩家顯示-->
@@ -53,6 +90,8 @@
   <script src="/javascripts/userInfo.js"></script>
   <script src="/javascripts/gameplay.js"></script>
   <script src="/javascripts/chatroom.js"></script>
+  <script src="/javascripts/googleSignin.js"></script>
+  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
   
 </body>
 </html>
