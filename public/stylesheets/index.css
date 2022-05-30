@@ -9,6 +9,28 @@ body {
     margin: 0;
 }
 
+#alert-window-bg {
+    width: 1000px; height: 600px; position: absolute; top: 0; left: 0;
+    z-index: 60; background-color: rgba(100, 100, 100, 0.25);
+}
+#alert-window {
+    width: 320px; height: 230px; background-color: #555;
+    position: absolute; top:220px; left:340px; z-index: 99;
+    border-radius: 5px; text-align: center;
+    box-shadow: 0px 0px 10px 5px rgb(5, 124, 124);
+    display: grid;
+    grid-template-rows: 50px 110px 70px;
+    justify-content: center; 
+}
+#alert-window-title {
+    font-size: 24px; color: #ddd;
+    margin: 10px;
+}
+#alert-window-message {
+    font-size: 18px; color: #ddd;
+    margin: auto 15px;
+}
+
 #game-canvas {
     background-color: #111; margin: 0;
 }
