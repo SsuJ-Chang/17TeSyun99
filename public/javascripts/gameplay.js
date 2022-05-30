@@ -89,9 +89,9 @@ function checkHitByBullet(bullet){ // 判定是否碰到子彈
             let alertTitle = generateText('特訓結束');
             document.getElementById('alert-window-title').innerHTML="";
             document.getElementById('alert-window-title').appendChild(alertTitle);
-            let hitMsg = generateText(`你被子彈打中了，存活了 ${me.scores} 秒。`);
+            let alertMsg = generateText(`你被子彈打中了，存活了 ${me.scores} 秒。`);
             document.getElementById('alert-window-message').innerHTML="";
-            document.getElementById('alert-window-message').appendChild(hitMsg);
+            document.getElementById('alert-window-message').appendChild(alertMsg);
         }
     }
 }
@@ -107,9 +107,9 @@ function checkHitByPlayer(player){ // 判定是否碰到其他玩家
             let alertTitle = generateText('特訓結束');
             document.getElementById('alert-window-title').innerHTML="";
             document.getElementById('alert-window-title').appendChild(alertTitle);
-            let hitMsg = generateText(`你撞到別人了，存活了 ${me.scores} 秒。`);
+            let alertMsg = generateText(`你撞到別人了，存活了 ${me.scores} 秒。`);
             document.getElementById('alert-window-message').innerHTML="";
-            document.getElementById('alert-window-message').appendChild(hitMsg);
+            document.getElementById('alert-window-message').appendChild(alertMsg);
         }
     }
 }
