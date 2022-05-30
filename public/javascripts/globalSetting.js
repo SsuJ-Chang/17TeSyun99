@@ -10,3 +10,8 @@ canvas.height = "600";
 function getRandom(min, max){
     return Math.floor(Math.random() * (max - min)) + min;
 };
+
+// 產生文字節點
+function generateText(string){
+    return document.createTextNode(string);
+}
