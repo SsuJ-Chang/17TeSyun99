@@ -1,6 +1,7 @@
 // const domain = "http://52.7.185.223:3099";
 const domain = "http://localhost:3099";
-const socket = io(`${domain}`, {'transports': ['websocket']}); // 直接指定以 websocket 連線
+const socket = io(`${domain}`, {'transports': ['websocket', "polling"]}); // 直接指定以 websocket 連線
+// const socket = io(); // 一般連線 會先以 http 為主
 
 // 玩家資訊
 let userName = document.getElementById('username-input');

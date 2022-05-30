@@ -1,16 +1,43 @@
 //
 const express = require('express');
 const app = express();
-app.use(express.static(__dirname + '/public'));
+const path = require('path');
+app.use(express.static('./public')); // 靜態檔案路徑和 middleware
 
 // 建立原生 Node.js http server
 const http = require('http');
 const { isObject } = require('util');
 const server = http.createServer(app);
 
-// 設定路徑 / 接收方法 GET 的請求(req)與回應結果(res)
-app.get('/', (req, res)=>{
-    res.sendFile(__dirname + '/views/index.html');
+// 解析 body
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+
+// 設定路徑
+app.get('/', (req, res)=>{  // 首頁 / 登入畫面
+    // 用 JWT 判斷是否已登入
+    res.sendFile(path.resolve(__dirname, './views/index.html'));
+})
+
+app.post('/api/signin', (req, res) => { // API 登入
+    const account = req.body.account;
+    const password = req.body.password;
+    console.log(`登入資料 acc:${account}, pw:${password}`);
+    if(account === "test" & password === "test"){
+        res.status(200).json({'ok':true});
+        console.log(`${account} 登入成功`);
+    }else{
+        res.status(400).json({"error": true, "message": "帳號或密碼錯誤，請重新輸入。"});
+        console.log(`登入失敗`);
+    }
+})
+
+app.post('/api/signup', () => { // API 註冊
+    console.log('註冊');
+})
+
+app.delete('/api/logout', ()=>{ // API 登出
+    console.log('登出');
 })
 
 // 導入 socket.io
