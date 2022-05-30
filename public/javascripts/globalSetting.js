@@ -13,7 +13,11 @@ function getRandom(min, max){
 
 // 點擊警告視窗確認按鈕
 document.getElementById('alert-window-confirm-btn').addEventListener('click', () => {
-    document.location.reload();
+    if(me.hp === 0){
+        document.location.reload();
+    }else{
+        document.getElementById('alert-window').classList.add('hidden');
+    }
 })
 
 // 產生文字節點

@@ -50,17 +50,35 @@ document.getElementById('signup-btn').addEventListener('click', () => { // 註�
     if(/^[\w.-]+@[\w.-]+\.[A-Za-z]{2,6}$/i.test(account)){
         valid++;
     }else{
-        alert("請依格式輸入電子信箱");
+        document.getElementById('alert-window').classList.remove('hidden');
+        let alertTitle = generateText('錯誤');
+        document.getElementById('alert-window-title').innerHTML="";
+        document.getElementById('alert-window-title').appendChild(alertTitle);
+        let hitMsg = generateText(`請依格式輸入電子信箱。`);
+        document.getElementById('alert-window-message').innerHTML="";
+        document.getElementById('alert-window-message').appendChild(hitMsg);
     }
-    if(/[0-9a-zA-Z]{4,20}$/i.test(pw)){
+    if(/[0-9a-zA-Z]{4,12}$/i.test(pw)){
         valid++;
     }else{
-        alert("請依格式輸入密碼");
+        document.getElementById('alert-window').classList.remove('hidden');
+        let alertTitle = generateText('錯誤');
+        document.getElementById('alert-window-title').innerHTML="";
+        document.getElementById('alert-window-title').appendChild(alertTitle);
+        let hitMsg = generateText(`請依格式輸入密碼。`);
+        document.getElementById('alert-window-message').innerHTML="";
+        document.getElementById('alert-window-message').appendChild(hitMsg);
     }
     if(/^[\u4E00-\u9FA50-9A-Za-z_]{1,8}$/i.test(nickname)){
         valid++;
     }else{
-        alert("請依格式輸入暱稱");
+        document.getElementById('alert-window').classList.remove('hidden');
+        let alertTitle = generateText('錯誤');
+        document.getElementById('alert-window-title').innerHTML="";
+        document.getElementById('alert-window-title').appendChild(alertTitle);
+        let hitMsg = generateText(`請依格式輸入暱稱。`);
+        document.getElementById('alert-window-message').innerHTML="";
+        document.getElementById('alert-window-message').appendChild(hitMsg);
     }
     // if(valid===3){
     //     fetch("/api/user", {
