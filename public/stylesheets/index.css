@@ -9,11 +9,11 @@ body {
     margin: 0;
 }
 
-#alert-window-bg {
+#alert-window {
     width: 1000px; height: 600px; position: absolute; top: 0; left: 0;
     z-index: 60; background-color: rgba(100, 100, 100, 0.25);
 }
-#alert-window {
+#alert-window-main {
     width: 320px; height: 230px; background-color: #555;
     position: absolute; top:220px; left:340px; z-index: 99;
     border-radius: 5px; text-align: center;
