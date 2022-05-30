@@ -1,6 +1,6 @@
 let players = []; // 所有玩家player
 let sortedPlayers = []; // 分數由高至低排序後的玩家player
-let bulletes = []; // 所有子彈
+let bullets = []; // 所有子彈
 let talkers = []; // 所有純聊天者talker
 let isPaused = false; // 是否暫停
 
@@ -10,12 +10,12 @@ function drawPause(){
     ctx.fillText("- 遊戲暫停 -", 400, 300);
 }
 
-function calculateDistance(playerX, playerY, bulleteX, bulleteY){ // 計算子彈和球的距離
-    let distance = Math.sqrt((playerX-bulleteX)**2+(playerY-bulleteY)**2)
+function calculateDistance(playerX, playerY, bulletX, bulletY){ // 計算子彈和球的距離
+    let distance = Math.sqrt((playerX-bulletX)**2+(playerY-bulletY)**2)
     return distance
 }
 
-function drawBulete(x, y, radius) { // 畫子彈
+function drawBullet(x, y, radius) { // 畫子彈
     ctx.beginPath();
     let radialgradient = ctx.createRadialGradient(x, y, 0.5, x, y, radius); // 設定漸層
     radialgradient.addColorStop(0, '#fff');
@@ -65,9 +65,9 @@ socket.on('playersInfo', (playersInfo)=>{ // 更新所有玩家資訊 包含排�
     // console.log("現在所有玩家資訊", players);
 })
 
-socket.on('bulletesInfo', (bulletesInfo) => { // 更新子彈資訊
-    bulletes = bulletesInfo.bulletes;
-    // console.log('全部的子彈', bulletes);
+socket.on('bulletsInfo', (bulletsInfo) => { // 更新子彈資訊
+    bullets = bulletsInfo.bullets;
+    // console.log('全部的子彈', bullets);
 })
 
 socket.on('talkersInfo', (talkersInfo) => { // 更新所有純聊天者資訊
@@ -76,10 +76,10 @@ socket.on('talkersInfo', (talkersInfo) => { // 更新所有純聊天者資訊
 })
 
 
-function checkHitByBullete(bullete){ // 判定是否碰到子彈
-    if(bullete && me.id && me.type === 0){ // 子彈與 me 必須還存在
-        // console.log(calculateDistance(me.x, me.y, bullete.x, bullete.y))
-        if(calculateDistance(me.x, me.y, bullete.x, bullete.y) < ballRadius+bullete.radius){
+function checkHitByBullet(bullet){ // 判定是否碰到子彈
+    if(bullet && me.id && me.type === 0){ // 子彈與 me 必須還存在
+        // console.log(calculateDistance(me.x, me.y, bullet.x, bullet.y))
+        if(calculateDistance(me.x, me.y, bullet.x, bullet.y) < ballRadius+bullet.radius){
             me.hp -= 100; // 扣 hp
             socket.emit('hit', me);
             socket.disconnect();
@@ -149,20 +149,20 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     }
 
     // render 子彈
-    bulletes.forEach( bullete => drawBulete(bullete.x, bullete.y, bullete.radius) );
+    bullets.forEach( bullet => drawBullet(bullet.x, bullet.y, bullet.radius) );
     // 移動子彈
     if(isPaused === false){
-        for(let i=0;i<=bulletes.length;i++){
-            if(bulletes[i]){
-                bulletes[i].x += bulletes[i].dx;
-                bulletes[i].y += bulletes[i].dy;
+        for(let i=0;i<=bullets.length;i++){
+            if(bullets[i]){
+                bullets[i].x += bullets[i].dx;
+                bullets[i].y += bullets[i].dy;
             }
         }
     }
 
     // 計算子彈和 me 的是否碰撞 有則結束遊戲
     if(isInvincible === false && me.hp > 0){
-        bulletes.forEach( bullete => checkHitByBullete(bullete) );
+        bullets.forEach( bullet => checkHitByBullet(bullet) );
     }
 
     // 計算其他玩家和 me 的是否碰撞 有則結束遊戲
