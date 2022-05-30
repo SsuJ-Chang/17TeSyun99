@@ -83,8 +83,12 @@ function checkHitByBullete(bullete){ // 判定是否碰到子彈
             me.hp -= 100; // 扣 hp
             socket.emit('hit', me);
             socket.disconnect();
-            document.location.reload();
-            alert(`你被子彈打中了，存活了 ${me.scores} 秒。`);
+            // 顯示結束視窗
+            document.getElementById('alert-window').classList.remove('hidden');
+            let alertTitle = generateText('特訓結束');
+            document.getElementById('alert-window-title').appendChild(alertTitle);
+            let hitMsg = generateText(`你被子彈打中了，存活了 ${me.scores} 秒。`);
+            document.getElementById('alert-window-message').appendChild(hitMsg);
         }
     }
 }
@@ -94,8 +98,12 @@ function checkHitByPlayer(player){ // 判定是否碰到其他玩家
             me.hp -= 100; // 扣 hp
             socket.emit('hit', me);
             socket.disconnect()
-            document.location.reload();
-            alert(`你撞到別人了，存活了 ${me.scores} 秒。`);
+            // 顯示結束視窗
+            document.getElementById('alert-window').classList.remove('hidden');
+            let alertTitle = generateText('特訓結束');
+            document.getElementById('alert-window-title').appendChild(alertTitle);
+            let hitMsg = generateText(`你撞到別人了，存活了 ${me.scores} 秒。`);
+            document.getElementById('alert-window-message').appendChild(hitMsg);
         }
     }
 }
@@ -120,7 +128,7 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     lastY = me.y;
 
     // 如果使用者是玩家就 render 自己
-    if(me.type === 0){
+    if(me.type === 0 && me.hp > 0){
         if(isInvincible === true){
             drawInvincible(me.x, me.y);
         }
@@ -153,12 +161,12 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     }
 
     // 計算子彈和 me 的是否碰撞 有則結束遊戲
-    if(isInvincible === false){
+    if(isInvincible === false && me.hp > 0){
         bulletes.forEach( bullete => checkHitByBullete(bullete) );
     }
 
     // 計算其他玩家和 me 的是否碰撞 有則結束遊戲
-    if(isInvincible === false){
+    if(isInvincible === false && me.hp > 0){
         others.forEach( player => checkHitByPlayer(player) );
     }
 
