@@ -56,7 +56,7 @@ body {
 }
 
 .input {
-    outline: none; width: 220px; height: 40px; margin: auto;
+    outline: none; width: 240px; height: 40px; margin: auto;
     font-size: 16px; font-weight: 400; color: #333;
     border-radius: 5px; padding: 5px;
 }
