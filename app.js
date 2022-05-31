@@ -1,4 +1,4 @@
-//
+// 導入 express
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -9,28 +9,64 @@ const http = require('http');
 const { isObject } = require('util');
 const server = http.createServer(app);
 
+// MongoDB 連線
+// const dbConnect = require('./global-functions');
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://anfer:Anferdb0728@cluster0.nabgq.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+
 // 解析 body
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-// 設定路徑
+// async function getData(acc){
+//     try {
+//         await client.connect();
+//         const database = client.db("17tesyun99");
+//         const results = database.collection("members");
+        
+//         const query = { account: acc };
+        
+//         const result = await results.findOne(query);
+        
+//         console.log('func內', result);
+
+//         return result
+//       } finally {
+//         await client.close();
+//       }
+// }
+
+const getData = require('./model');
+
+// 設定各 API
 app.get('/', (req, res)=>{  // 首頁 / 登入畫面
     // 用 JWT 判斷是否已登入
     res.sendFile(path.resolve(__dirname, './views/index.html'));
 })
 
-app.post('/api/signin', (req, res) => { // API 登入
+app.post('/api/signin',async (req, res) => { // API 登入
     const account = req.body.account;
     const password = req.body.password;
-    console.log(`登入資料 acc:${account}, pw:${password}`);
-    if(account === "test" & password === "test"){
-        // 給 JWT 並設成 cookie
-        res.status(200).json({'ok':true});
-        console.log(`${account} 登入成功`);
+    console.log(`登入輸入 acc:${account}, pw:${password}`);
+
+    let result = await getData(account);
+    console.log('取得資料', result);
+    
+    if(result !== null){
+        if(password === result.password){
+            // 給 JWT
+            res.status(200).json({'ok':true, 'nickname':result.nickname});
+            console.log(`${account} 登入成功`);
+        }else{
+            res.status(400).json({"error": true, "message": "帳號或密碼錯誤，請重新輸入。"});
+            console.log(`${account} 登入失敗`);
+        }
     }else{
         res.status(400).json({"error": true, "message": "帳號或密碼錯誤，請重新輸入。"});
-        console.log(`登入失敗`);
+        console.log(`${account} 登入失敗`);
     }
+
 })
 
 app.post('/api/signup', () => { // API 註冊
@@ -63,7 +99,7 @@ let talkersInfo = { // 同一局遊戲所有 純聊天者talkers 資訊
 let maxConcurrentPlayers = 0; // 開機以最高同上玩家
 let time = new Date(); // 伺服器時間
 
-const fs = require('fs'); // 引入 File Sysyem Module
+const fs = require('fs'); // 引入 File System Module
 
 const getRandom = require('./global-functions');
 
@@ -142,7 +178,6 @@ function moveBullet(){  // call 每個子彈移動
     }
 }
 const tickTime = (Math.floor(Math.random() * 3) + 6)*1000
-// console.log(tickTime);
 let startGenerateBullets = setInterval(generateBullet, tickTime); // 間隔時間自動產生子彈
 let startMoveBullets = setInterval(moveBullet, 1000/60);  // 呼叫子彈移動 主要是為了讓他會死亡
 

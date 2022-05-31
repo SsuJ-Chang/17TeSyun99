@@ -33,6 +33,9 @@ document.getElementById('signin-btn').addEventListener('click', () => { // 登�
             document.getElementById('signin').classList.add('hidden');
             document.getElementById('enter-btn').classList.remove('hidden');
             document.getElementById('member-info').classList.remove('hidden');
+            let nickname = generateText(`${data.nickname}`);
+            document.getElementById('member-nickname').appendChild(nickname);
+
         }else{
             document.getElementById('alert-window').classList.remove('hidden');
             let alertTitle = generateText('錯誤');
