@@ -8,6 +8,7 @@ RUN npm install express@4
 RUN npm install socket.io
 RUN npm install dotenv --save
 RUN npm install mongodb
+RUN npm install jsonwebtoken
 
 COPY . .
 
