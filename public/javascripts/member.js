@@ -35,7 +35,6 @@ document.getElementById('signin-btn').addEventListener('click', () => { // 登�
             document.getElementById('member-info').classList.remove('hidden');
             let nickname = generateText(`${data.nickname}`);
             document.getElementById('member-nickname').appendChild(nickname);
-
         }else{
             document.getElementById('alert-window').classList.remove('hidden');
             let alertTitle = generateText('錯誤');
@@ -127,4 +126,17 @@ document.getElementById('signup-btn').addEventListener('click', () => { // 註�
         })
         clearInput(".input");
     }
+})
+
+document.getElementById('logout').addEventListener('click', () => { // 登出
+    // 刪除或重設 JWT
+    fetch("/api/logout").then( res => res.json()).then((data)=>{
+        if(data['ok']){
+            document.getElementById('member-nickname').innerHTML="";
+            document.getElementById('member-info').classList.remove('hidden');
+            document.location.reload();
+        }
+    }).catch((error)=>{
+        console.log(error);
+    })
 })

@@ -77,8 +77,9 @@ app.post('/api/signup', async (req, res) => { // API 註冊
     }
 })
 
-app.delete('/api/logout', ()=>{ // API 登出
+app.get('/api/logout', (req, res)=>{ // API 登出
     // 重新設定 JWT 的期限
+    res.status(200).json({'ok':true});
     console.log('登出');
 })
 
