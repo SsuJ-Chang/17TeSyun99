@@ -56,7 +56,7 @@ document.getElementById('signup-btn').addEventListener('click', () => { // 註�
     let pw=document.getElementById("signup-pw").value;
     let nickname=document.getElementById("signup-nickname").value;
     let valid=0;
-    if(/^[\w.-]+@[\w.-]+\.[A-Za-z]{2,6}$/i.test(account)){
+    if(/^[\w.-]+@[\.0-9A-Za-z]{2,20}$/i.test(account)){
         valid++;
     }else{
         document.getElementById('alert-window').classList.remove('hidden');
@@ -89,28 +89,42 @@ document.getElementById('signup-btn').addEventListener('click', () => { // 註�
         document.getElementById('alert-window-message').innerHTML="";
         document.getElementById('alert-window-message').appendChild(alertMsg);
     }
-    // if(valid===3){
-    //     fetch("/api/user", {
-    //         method:"POST",
-    //         body: JSON.stringify({
-    //             "account": `${account}`,
-    //             "password": `${pw}`,
-    //             "nickname": `${nickname}`
-    //           }),
-    //         headers: {
-    //             "Content-type": "application/json"
-    //         }
-    //     }).then((response)=>{
-    //         return response.json();
-    //     }).then((data)=>{
-    //         if(data['ok']){
-    //             console.log("註冊成功");
-    //         }else{
-    //             console.log("註冊失敗");
-    //         }
-    //     }).catch((error)=>{
-    //         console.log(error);
-    //     })
-    //     clearInput(".input");
-    // }
+    if(valid===3){
+        fetch("/api/signup", {
+            method:"POST",
+            body: JSON.stringify({
+                "account": `${account}`,
+                "password": `${pw}`,
+                "nickname": `${nickname}`
+              }),
+            headers: {
+                "Content-type": "application/json"
+            }
+        }).then((response)=>{
+            return response.json();
+        }).then((data)=>{
+            if(data['ok']){
+                document.getElementById('alert-window').classList.remove('hidden');
+                let alertTitle = generateText('註冊成功');
+                document.getElementById('alert-window-title').innerHTML="";
+                document.getElementById('alert-window-title').appendChild(alertTitle);
+                let alertMsg = generateText(`歡迎 ${data.nickname}，請登入遊戲。`);
+                document.getElementById('alert-window-message').innerHTML="";
+                document.getElementById('alert-window-message').appendChild(alertMsg);
+                document.getElementById('signup').classList.add('hidden');
+                document.getElementById('signin').classList.remove('hidden');
+            }else{
+                document.getElementById('alert-window').classList.remove('hidden');
+                let alertTitle = generateText('錯誤');
+                document.getElementById('alert-window-title').innerHTML="";
+                document.getElementById('alert-window-title').appendChild(alertTitle);
+                let alertMsg = generateText(`${data['message']}`);
+                document.getElementById('alert-window-message').innerHTML="";
+                document.getElementById('alert-window-message').appendChild(alertMsg);
+            }
+        }).catch((error)=>{
+            console.log(error);
+        })
+        clearInput(".input");
+    }
 })

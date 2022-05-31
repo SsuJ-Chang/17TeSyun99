@@ -5,20 +5,39 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 async function getData(email){ // 取得會員資料 function
-    try {
-        await client.connect();
-        const database = client.db("17tesyun99");
-        const results = database.collection("members");
-        
-        const query = { account: email };
-        const result = await results.findOne(query);
-        // console.log('getData 的結果', result);
+  try {
+      await client.connect();
+      const database = client.db("17tesyun99");
+      const members = database.collection("members");
+      
+      const query = { account: email };
+      const result = await members.findOne(query);
+      // console.log('getData 的結果', result);
 
-        return result;
+      return result;
 
-    } finally {
-      await client.close();
-    }
+  } finally {
+    await client.close();
+  }
 }
 
-module.exports = getData;
+async function insertData(email, password, nickname){ // 插入新的會員資料 function
+  try {
+    await client.connect();
+    const database = client.db("17tesyun99");
+    const members = database.collection("members");
+    // create a document to insert
+    const doc = {
+      account: `${email}`,
+      password: `${password}`,
+      nickname: `${nickname}`,
+      best_record: 0
+    }
+    const result = await members.insertOne(doc);
+    console.log(`成功新增一筆資料 id: ${result.insertedId}`);
+  } finally {
+    await client.close();
+  }
+}
+
+module.exports = {getData, insertData};

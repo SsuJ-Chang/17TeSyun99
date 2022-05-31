@@ -19,58 +19,62 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-// async function getData(acc){
-//     try {
-//         await client.connect();
-//         const database = client.db("17tesyun99");
-//         const results = database.collection("members");
-        
-//         const query = { account: acc };
-        
-//         const result = await results.findOne(query);
-        
-//         console.log('func內', result);
-
-//         return result
-//       } finally {
-//         await client.close();
-//       }
-// }
-
-const getData = require('./model');
-
 // 設定各 API
 app.get('/', (req, res)=>{  // 首頁 / 登入畫面
     // 用 JWT 判斷是否已登入
     res.sendFile(path.resolve(__dirname, './views/index.html'));
 })
 
+const {getData, insertData} = require('./model');
+
 app.post('/api/signin',async (req, res) => { // API 登入
     const account = req.body.account;
     const password = req.body.password;
     console.log(`登入輸入 acc:${account}, pw:${password}`);
 
-    let result = await getData(account);
-    console.log('取得資料', result);
-    
-    if(result !== null){
-        if(password === result.password){
-            // 給 JWT
-            res.status(200).json({'ok':true, 'nickname':result.nickname});
-            console.log(`${account} 登入成功`);
+    try{
+        let result = await getData(account);
+        console.log('從 DB 取得資料', result);
+        
+        if(result !== null){
+            if(password === result.password){
+                // 給 JWT
+                res.status(200).json({'ok':true, 'nickname':result.nickname});
+                console.log(`${account} 登入成功`);
+            }else{
+                res.status(400).json({"error": true, "message": "帳號或密碼錯誤，請重新輸入。"});
+                console.log(`${account} 登入失敗`);
+            }
         }else{
             res.status(400).json({"error": true, "message": "帳號或密碼錯誤，請重新輸入。"});
             console.log(`${account} 登入失敗`);
         }
-    }else{
-        res.status(400).json({"error": true, "message": "帳號或密碼錯誤，請重新輸入。"});
-        console.log(`${account} 登入失敗`);
+    }catch(error){
+        console.log('錯誤！ ', error);
+        res.status(500).json({"error": true, "message": "伺服器內部錯誤"});
     }
-
 })
 
-app.post('/api/signup', () => { // API 註冊
-    console.log('註冊');
+app.post('/api/signup', async (req, res) => { // API 註冊
+    const account = req.body.account;
+    const password = req.body.password;
+    const nickname = req.body.nickname;
+    console.log(`註冊輸入 acc:${account}, pw:${password}, nickname:${nickname}`);
+
+    try{
+        let result = await getData(account);
+        if(result === null){ // 確認是否有重複帳號
+            await insertData(account, password, nickname); // 新增資料
+            res.status(200).json({'ok':true, 'nickname':nickname});
+            console.log(`${account} 註冊成功`);
+        }else{
+            res.status(400).json({"error": true, "message": "註冊失敗，帳號重複。"});
+            console.log(`${account} 註冊失敗`);
+        }
+    }catch(error){
+        console.log('錯誤！ ', error);
+        res.status(500).json({"error": true, "message": "伺服器內部錯誤"});
+    }
 })
 
 app.delete('/api/logout', ()=>{ // API 登出
