@@ -30,6 +30,7 @@ document.getElementById('signin-btn').addEventListener('click', () => { // ç™»å…
         return response.json();
     }).then((data)=>{
         if(data['ok']){
+            userName = data.nickname;
             document.getElementById('signin').classList.add('hidden');
             document.getElementById('enter-btn').classList.remove('hidden');
             document.getElementById('member-info').classList.remove('hidden');
