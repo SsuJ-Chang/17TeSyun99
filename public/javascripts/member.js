@@ -15,6 +15,7 @@ function clearInput(selector){  // 清空 input
 }
 
 document.getElementById('signin-btn').addEventListener('click', () => { // 登入
+    document.getElementById('loading').classList.remove('hidden');
     let account=document.getElementById("signin-acc").value;
     let pw=document.getElementById("signin-pw").value;
     fetch("/api/signin", {
@@ -29,6 +30,7 @@ document.getElementById('signin-btn').addEventListener('click', () => { // 登�
     }).then((response)=>{
         return response.json();
     }).then((data)=>{
+        document.getElementById('loading').classList.add('hidden');
         if(data['ok']){
             userName = data.nickname;
             document.getElementById('signin').classList.add('hidden');
@@ -52,6 +54,7 @@ document.getElementById('signin-btn').addEventListener('click', () => { // 登�
 })
 
 document.getElementById('signup-btn').addEventListener('click', () => { // 註冊
+    document.getElementById('loading').classList.remove('hidden');
     let account=document.getElementById("signup-acc").value;
     let pw=document.getElementById("signup-pw").value;
     let nickname=document.getElementById("signup-nickname").value;
@@ -103,6 +106,7 @@ document.getElementById('signup-btn').addEventListener('click', () => { // 註�
         }).then((response)=>{
             return response.json();
         }).then((data)=>{
+            document.getElementById('loading').classList.add('hidden');
             if(data['ok']){
                 document.getElementById('alert-window').classList.remove('hidden');
                 let alertTitle = generateText('註冊成功');
@@ -130,8 +134,10 @@ document.getElementById('signup-btn').addEventListener('click', () => { // 註�
 })
 
 document.getElementById('logout').addEventListener('click', () => { // 登出
+    document.getElementById('loading').classList.remove('hidden');
     // 刪除或重設 JWT
     fetch("/api/logout").then( res => res.json()).then((data)=>{
+        document.getElementById('loading').classList.add('hidden');
         if(data['ok']){
             document.getElementById('member-nickname').innerHTML="";
             document.getElementById('member-info').classList.remove('hidden');
