@@ -9,6 +9,19 @@ body {
     margin: 0;
 }
 
+#loading {
+    width: 1000px; height: 600px; position: absolute; top: 0; left: 0;
+    z-index: 60; background-color: rgba(0, 0, 0, 0.8);
+}
+#loading-img {
+    position: relative; top: 260px; left: 440px;
+}
+#loading-text {
+    position: relative; top: 250px; left: 450px;
+    color: rgb(5, 124, 124); font-size: 24px; font-weight: 600;
+    text-shadow: 1px 1px 1px rgba(200, 200, 200, 0.75);
+}
+
 #alert-window {
     width: 1000px; height: 600px; position: absolute; top: 0; left: 0;
     z-index: 60; background-color: rgba(100, 100, 100, 0.25);
