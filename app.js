@@ -9,28 +9,25 @@ const http = require('http');
 const { isObject } = require('util');
 const server = http.createServer(app);
 
-// MongoDB 連線
-// const dbConnect = require('./global-functions');
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://anfer:Anferdb0728@cluster0.nabgq.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-
 // 解析 body
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-// 設定各 API
+// 導入必要 module
+const {getData, insertData} = require('./model');
+require('dotenv').config()
+const jwt = require('jsonwebtoken');
+
+// 設定 API
 app.get('/', (req, res)=>{  // 首頁 / 登入畫面
-    // 用 JWT 判斷是否已登入
+
     res.sendFile(path.resolve(__dirname, './views/index.html'));
 })
-
-const {getData, insertData} = require('./model');
 
 app.post('/api/signin',async (req, res) => { // API 登入
     const account = req.body.account;
     const password = req.body.password;
-    console.log(`登入輸入 acc:${account}, pw:${password}`);
+    console.log(`登入輸入 acc: ${account}, pw: ${password}`);
 
     try{
         let result = await getData(account);
@@ -38,7 +35,10 @@ app.post('/api/signin',async (req, res) => { // API 登入
         
         if(result !== null){
             if(password === result.password){
-                // 給 JWT
+                // 給 JWT 並設置在 cookie
+                const token = jwt.sign({ account }, process.env.TOKEN_SECRET, { expiresIn: '120s' });
+                res.cookie('JWT', token, { maxAge: 120000, httpOnly: true});
+
                 res.status(200).json({'ok':true, 'nickname':result.nickname});
                 console.log(`${account} 登入成功`);
             }else{
@@ -78,7 +78,9 @@ app.post('/api/signup', async (req, res) => { // API 註冊
 })
 
 app.get('/api/logout', (req, res)=>{ // API 登出
-    // 重新設定 JWT 的期限
+    // 清除 cookie
+    res.clearCookie('JWT');
+
     res.status(200).json({'ok':true});
     console.log('登出');
 })
