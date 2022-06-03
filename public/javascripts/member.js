@@ -14,6 +14,27 @@ function clearInput(selector){  // 清空 input
     }
 }
 
+window.addEventListener("DOMContentLoaded", ()=>{
+    fetch("/api/member",{
+        method: 'GET',
+        credentials: 'include'
+      }).then((response)=>{
+          return response.json()
+      }).then((data)=>{
+        document.getElementById('loading').classList.add('hidden');
+        if(data['ok']){
+            userName = data.nickname;
+            document.getElementById('signin').classList.add('hidden');
+            document.getElementById('enter-btn').classList.remove('hidden');
+            document.getElementById('member-info').classList.remove('hidden');
+            let nickname = generateText(`${data.nickname}`);
+            document.getElementById('member-nickname').appendChild(nickname);
+        }
+      }).catch((error)=>{
+        console.log(error);
+      })
+})
+
 document.getElementById('signin-btn').addEventListener('click', () => { // 登入
     document.getElementById('loading').classList.remove('hidden');
     let account=document.getElementById("signin-acc").value;

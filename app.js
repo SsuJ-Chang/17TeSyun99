@@ -20,8 +20,24 @@ const jwt = require('jsonwebtoken');
 
 // 設定 API
 app.get('/', (req, res)=>{  // 首頁 / 登入畫面
-
     res.sendFile(path.resolve(__dirname, './views/index.html'));
+})
+
+app.get('/api/member', (req, res) => { // API 取得會員狀態
+    const cookie = req.headers.cookie;
+    if(cookie !== undefined){
+        try{
+            const value = cookie.split('JWT=')[1];
+            const token = jwt.verify(value, process.env.TOKEN_SECRET)
+            console.log('JWT結果', token.nickname);
+            res.status(200).json({'ok':true, 'nickname':token.nickname});
+        }catch(error){
+            console.log('錯誤！ ', error);
+            res.status(500).json({"error": true, "message": "伺服器內部錯誤"});
+        }
+    }else{
+        res.status(200).json({'ok':false});
+    }
 })
 
 app.post('/api/signin',async (req, res) => { // API 登入
@@ -36,7 +52,8 @@ app.post('/api/signin',async (req, res) => { // API 登入
         if(result !== null){
             if(password === result.password){
                 // 給 JWT 並設置在 cookie
-                const token = jwt.sign({ account }, process.env.TOKEN_SECRET, { expiresIn: '120s' });
+                const nickname = result.nickname;
+                const token = jwt.sign({ nickname }, process.env.TOKEN_SECRET, { expiresIn: '120s' });
                 res.cookie('JWT', token, { maxAge: 120000, httpOnly: true});
 
                 res.status(200).json({'ok':true, 'nickname':result.nickname});
