@@ -53,8 +53,8 @@ app.post('/api/signin',async (req, res) => { // API 登入
             if(password === result.password){
                 // 給 JWT 並設置在 cookie
                 const nickname = result.nickname;
-                const token = jwt.sign({ nickname }, process.env.TOKEN_SECRET, { expiresIn: '120s' });
-                res.cookie('JWT', token, { maxAge: 120000, httpOnly: true});
+                const token = jwt.sign({ nickname }, process.env.TOKEN_SECRET, { expiresIn: '600s' });
+                res.cookie('JWT', token, { maxAge: 600000, httpOnly: true});
 
                 res.status(200).json({'ok':true, 'nickname':result.nickname});
                 console.log(`${account} 登入成功`);
