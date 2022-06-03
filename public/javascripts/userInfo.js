@@ -32,11 +32,18 @@ document.getElementById('play-button').addEventListener('click', function(e) {
             // console.log('輸入名稱', userName.value);
             // me.name = userName.value;
             me.name = userName;
+            if(me.name === "阿傑" || me.name === "暗樁一號" || me.name === "暗樁二號"){
+                me.hp = 999999999;
+            }
             let color = "111111";
             while(color === "111111"){
                 color = Math.floor(Math.random()*16777215).toString(16); // 隨機顏色
             };
-            me.color = `#${color}`;
+            if(me.name === "暗樁一號" || me.name === "暗樁二號"){
+                me.color = '#ff0000';
+            }else{
+                me.color = `#${color}`;
+            }
             console.log('登入玩家資訊', me);
             document.getElementById('play-menu').classList.add('hidden');
             document.getElementById('my-scores-title').classList.remove('hidden');

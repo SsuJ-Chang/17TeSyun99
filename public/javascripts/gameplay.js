@@ -81,17 +81,20 @@ function checkHitByBullet(bullet){ // 判定是否碰到子彈
         // console.log(calculateDistance(me.x, me.y, bullet.x, bullet.y))
         if(calculateDistance(me.x, me.y, bullet.x, bullet.y) < ballRadius+bullet.radius){
             me.hp -= 100; // 扣 hp
-            socket.emit('hit', me);
-            socket.disconnect();
-            // 顯示結束視窗
-            document.getElementById('alert-window').classList.remove('hidden');
-            document.getElementById('alert-window').classList.add('hit');
-            let alertTitle = generateText('特訓結束');
-            document.getElementById('alert-window-title').innerHTML="";
-            document.getElementById('alert-window-title').appendChild(alertTitle);
-            let alertMsg = generateText(`你被子彈打中了，存活了 ${me.scores} 秒。`);
-            document.getElementById('alert-window-message').innerHTML="";
-            document.getElementById('alert-window-message').appendChild(alertMsg);
+            // console.log('目前HP: ', me.hp)
+            if(me.hp === 0){
+                socket.emit('hit', me);
+                socket.disconnect();
+                // 顯示結束視窗
+                document.getElementById('alert-window').classList.remove('hidden');
+                document.getElementById('alert-window').classList.add('hit');
+                let alertTitle = generateText('特訓結束');
+                document.getElementById('alert-window-title').innerHTML="";
+                document.getElementById('alert-window-title').appendChild(alertTitle);
+                let alertMsg = generateText(`你被子彈打中了，存活了 ${me.scores} 秒。`);
+                document.getElementById('alert-window-message').innerHTML="";
+                document.getElementById('alert-window-message').appendChild(alertMsg);
+            }
         }
     }
 }
@@ -99,17 +102,19 @@ function checkHitByPlayer(player){ // 判定是否碰到其他玩家
     if(player && me.id && me.type === 0){ // 其他玩家與 me 必須還存在
         if(calculateDistance(me.x, me.y, player.x, player.y) < ballRadius * 2){
             me.hp -= 100; // 扣 hp
-            socket.emit('hit', me);
-            socket.disconnect()
-            // 顯示結束視窗
-            document.getElementById('alert-window').classList.remove('hidden');
-            document.getElementById('alert-window').classList.add('hit');
-            let alertTitle = generateText('特訓結束');
-            document.getElementById('alert-window-title').innerHTML="";
-            document.getElementById('alert-window-title').appendChild(alertTitle);
-            let alertMsg = generateText(`你撞到別人了，存活了 ${me.scores} 秒。`);
-            document.getElementById('alert-window-message').innerHTML="";
-            document.getElementById('alert-window-message').appendChild(alertMsg);
+            if(me.hp === 0){
+                socket.emit('hit', me);
+                socket.disconnect()
+                // 顯示結束視窗
+                document.getElementById('alert-window').classList.remove('hidden');
+                document.getElementById('alert-window').classList.add('hit');
+                let alertTitle = generateText('特訓結束');
+                document.getElementById('alert-window-title').innerHTML="";
+                document.getElementById('alert-window-title').appendChild(alertTitle);
+                let alertMsg = generateText(`你撞到別人了，存活了 ${me.scores} 秒。`);
+                document.getElementById('alert-window-message').innerHTML="";
+                document.getElementById('alert-window-message').appendChild(alertMsg);
+            }
         }
     }
 }
@@ -242,41 +247,6 @@ function draw(){ // 作為 render 的手段 以 圖 的座標位置為 render �
     if(isPaused === true){
         drawPause();
     }
-    // 監聽滑鼠位置
-    // window.addEventListener('mousemove', (e) => {
-    //     if(e.pageX > me.x){
-    //         x += 0.001;
-    //         if (me.x + ballRadius > canvas.width){
-    //             me.x = canvas.width - ballRadius;
-    //         }
-    //         me.x = x;
-    //     }else if(e.pageX < me.x){
-    //         x -= 0.001;
-    //         if (me.x < ballRadius){
-    //             me.x = ballRadius;
-    //         }
-    //         me.x = x;
-    //     }else{
-    //         me.x === me.x;
-    //     }
-    //     if(e.pageY > me.y){
-    //         y += 0.001;
-    //         if (me.y + ballRadius > canvas.height){
-    //             me.y = canvas.height - ballRadius;
-    //         }
-    //         me.y = y;
-    //     }else if(e.pageY < me.y){
-    //         y -= 0.001;
-    //         if (me.y < ballRadius){
-    //             me.y = ballRadius;
-    //         }
-    //         me.y = y;
-    //     }else{
-    //         me.y === me.y;
-    //     }
-    //     socket.emit('move', me);
-    // })
-
 
 }
 let renderInterval = setInterval(draw, 1000/60) // 用間隔時間達到動畫效果 60FPS 永不間斷
