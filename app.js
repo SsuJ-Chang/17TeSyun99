@@ -33,7 +33,7 @@ app.get('/api/member', (req, res) => { // API 取得會員狀態
             res.status(200).json({'ok':true, 'nickname':token.nickname});
         }catch(error){
             console.log('錯誤！ ', error);
-            res.status(500).json({"error": true, "message": "伺服器內部錯誤"});
+            res.status(403).json({"error": true, "message": "訪問權限不足"});
         }
     }else{
         res.status(200).json({'ok':false});
