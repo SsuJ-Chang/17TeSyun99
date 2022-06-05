@@ -7,8 +7,8 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function getData(email){ // 取得會員資料 function
   try {
       await client.connect();
-      const database = client.db("17tesyun99");
-      const members = database.collection("members");
+      const database = client.db(`${process.env.DB_DB}`);
+      const members = database.collection(`${process.env.DB_COLLECTION}`);
       
       const query = { account: email };
       const result = await members.findOne(query);
@@ -24,8 +24,8 @@ async function getData(email){ // 取得會員資料 function
 async function insertData(email, password, nickname){ // 插入新的會員資料 function
   try {
     await client.connect();
-    const database = client.db("17tesyun99");
-    const members = database.collection("members");
+    const database = client.db(`${process.env.DB_DB}`);
+    const members = database.collection(`${process.env.DB_COLLECTION}`);
     // create a document to insert
     const doc = {
       account: `${email}`,
