@@ -15,6 +15,7 @@ function clearInput(selector){  // 清空 input
 }
 
 window.addEventListener("DOMContentLoaded", ()=>{
+    document.getElementById('loading').classList.remove('hidden');
     fetch("/api/member",{
         method: 'GET',
         credentials: 'include'
@@ -75,7 +76,6 @@ document.getElementById('signin-btn').addEventListener('click', () => { // 登�
 })
 
 document.getElementById('signup-btn').addEventListener('click', () => { // 註冊
-    document.getElementById('loading').classList.remove('hidden');
     let account=document.getElementById("signup-acc").value;
     let pw=document.getElementById("signup-pw").value;
     let nickname=document.getElementById("signup-nickname").value;
@@ -114,6 +114,7 @@ document.getElementById('signup-btn').addEventListener('click', () => { // 註�
         document.getElementById('alert-window-message').appendChild(alertMsg);
     }
     if(valid===3){
+        document.getElementById('loading').classList.remove('hidden');
         fetch("/api/signup", {
             method:"POST",
             body: JSON.stringify({
