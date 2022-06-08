@@ -333,19 +333,6 @@ io.on('connection', (socket) => { // 該 socket 的連線 主要玩家資料來�
         io.emit('message', msgInfo);
     })
 
-    // socket.on('mousemovePage', (movePlayerCursor) => { // 玩家滑鼠移動事件
-    //     console.log(movePlayerCursor);
-    //     let movePlayer = playersInfo.players.find(player => player.id === socket.id);
-    //     console.log('滑鼠移動玩家', movePlayer);
-    //     if(movePlayer){
-    //         movePlayer.x = movePlayerCursor.x;
-    //         movePlayer.y = movePlayerCursor.y;
-    //         console.log('新滑鼠移動玩家', movePlayer);
-    //         console.log('所有玩家', playersInfo);
-    //         socket.emit('playerInfo', playersInfo)
-    //     }
-    // })
-
     socket.on('start', () => { // 玩家正式加入遊戲(有 socket.id 後)
         startGetScore = setInterval(getScore, 1000); // 開始計時累積分數
         isPlayersInfoChanged = true;
