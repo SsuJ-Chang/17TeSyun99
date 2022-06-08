@@ -4,11 +4,6 @@ WORKDIR /17TeSyun99
 
 COPY package*.json ./
 RUN npm install
-RUN npm install express@4
-RUN npm install socket.io
-RUN npm install dotenv --save
-RUN npm install mongodb
-RUN npm install jsonwebtoken
 
 COPY . .
 
