@@ -1,6 +1,13 @@
-# 17 TeSyun 99 (17特訓99)
-Remaking single player game "TeSyun99" and supporting multiple players online.
+# 17TeSyun99 (17特訓99)
+It's a project of remaking single player game "TeSyun99" and supporting multiple players online.
 ![17特訓99](https://user-images.githubusercontent.com/52148950/172580670-cd6a5277-5ef2-420a-8747-f3a1f4c1014c.JPG)
+
+## What is TeSyun99
+* A classic litte game which player controls a flight dodging all direction random moving bullets.
+* Player will get a rating when game over.  
+![tr](https://user-images.githubusercontent.com/52148950/172999958-b80e4cb7-7578-4679-a613-57476bdd33e6.png)
+* **In 17TeSyun99, player should dodge other player's flight and random moving bullets.**
+![TS01](https://user-images.githubusercontent.com/52148950/173000796-88564147-1fd7-4495-9b6f-89ce869440f1.JPG)
 
 ## Core Feature
 * Multiple Playes Online Game
@@ -8,7 +15,39 @@ Remaking single player game "TeSyun99" and supporting multiple players online.
 
 ## Language
 * Front-End: Javascript
-* Back-End: Node.js + Express.js
+* Back-End: Node.js & Express.js
+
+## How to implement gameplay mechanics 
+### Client Side
+* Transport player data by **Socket.IO** client.
+* Render game view by **HTML5 Canvas API**.
+  * Background images
+  * Player (controller)
+  * All other players (enemies)
+  * All bullets 
+* Implement 60 FPS by **JavaScript `setInterval()`**.
+
+> Client will render player's flight according to the latest player data in client for ***making sure player's view smooth***. 
+
+### Server Side
+* Transport game data by **Socket.IO** server.
+  * Players data
+  * Leaderboard 
+  * Bullets data
+* Implement fixed server updating frequency by **JavaScript `setInterval()`**.
+
+> In order to decrease unnecessary packet transporting, the game data will broadcast after the ***data changed flag*** becoming ***true***. 
 
 ## Back-End Architecture
 ![17TS99](https://user-images.githubusercontent.com/52148950/172580967-f7db2244-6051-4983-b928-38ab9e5e3db8.png)
+
+### About Back-End
+* Monitor metrics from instances and auto scaling group by **AWS Cloudwatch**.
+* Horizontal scailing by **AWS Auto Scaling** based on AWS Cloudwatch alarms.
+  * Add 1 instance when CPU Utilization approachs to specified metrics of the original instance.
+  * Remove 1 instance when CPU Utilization approachs to specified metrics of an addtional instance scaled by auto scaling group.
+* Deploy application server by **Docker**.
+* Store member data by **MongoDB**.
+* Listen 80 & 443 for reverse proxy by **Nginx**.
+* Authenticate member state by **JWT**.
+* Improve application availability and responsiveness by **AWS Load Balancer**.
