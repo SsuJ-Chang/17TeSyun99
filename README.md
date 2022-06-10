@@ -36,7 +36,7 @@ It's a project of remaking single player game "TeSyun99" and supporting multiple
   * Bullets data
 * Implementing fixed server updating frequency by **JavaScript `setInterval()`**
 
-> In order to decrease unnecessary packets transporting, the game data will broadcast after the ***"isPlayersInfoChanged" flag*** becoming ***true***. 
+> In order to decrease unnecessary packets transporting, the game data will broadcast after the ***`isPlayersInfoChanged` flag*** becoming ***true***. 
 
 ## Back-End Architecture
 ![17TS99](https://user-images.githubusercontent.com/52148950/172580967-f7db2244-6051-4983-b928-38ab9e5e3db8.png)
