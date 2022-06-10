@@ -22,12 +22,12 @@ It's a project of remaking single player game "TeSyun99" and supporting multiple
 * Transport player data by **Socket.IO** client.
 * Render game view by **HTML5 Canvas API**.
   * Background images
-  * Player (controller)
-  * All other players (enemies)
+  * Player's flight(controller)
+  * All other player's flights (enemies)
   * All bullets 
 * Implement 60 FPS by **JavaScript `setInterval()`**.
 
-> Client will render player's flight according to the latest player data in client for ***making sure player's view smooth***. 
+> Client will render player's flight according to the latest player data in client for ***making sure player's flight moving smoothly***. 
 
 ### Server Side
 * Transport game data by **Socket.IO** server.
@@ -36,7 +36,7 @@ It's a project of remaking single player game "TeSyun99" and supporting multiple
   * Bullets data
 * Implement fixed server updating frequency by **JavaScript `setInterval()`**.
 
-> In order to decrease unnecessary packet transporting, the game data will broadcast after the ***data changed flag*** becoming ***true***. 
+> In order to decrease unnecessary packets transporting, the game data will broadcast after the ***data changed flag*** becoming ***true***. 
 
 ## Back-End Architecture
 ![17TS99](https://user-images.githubusercontent.com/52148950/172580967-f7db2244-6051-4983-b928-38ab9e5e3db8.png)
@@ -45,6 +45,7 @@ It's a project of remaking single player game "TeSyun99" and supporting multiple
 * Monitor metrics from instances and auto scaling group by **AWS Cloudwatch**.
 * Horizontal scailing by **AWS Auto Scaling** based on AWS Cloudwatch alarms.
   * Add 1 instance when CPU Utilization approachs to specified metrics of the original instance.
+  ![add](https://user-images.githubusercontent.com/52148950/173033486-d9eb81cc-6acc-4ed2-a238-c9d2549da0ce.JPG)
   * Remove 1 instance when CPU Utilization approachs to specified metrics of an addtional instance scaled by auto scaling group.
 * Deploy application server by **Docker**.
 * Store member data by **MongoDB**.
