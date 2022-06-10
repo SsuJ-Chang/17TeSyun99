@@ -19,22 +19,22 @@ It's a project of remaking single player game "TeSyun99" and supporting multiple
 
 ## How to implement gameplay mechanics 
 ### Client Side
-* Transport player data by **Socket.IO** client.
-* Render game view by **HTML5 Canvas API**.
+* Transporting player data by **Socket.IO** client
+* Rendering game view by **HTML5 Canvas API**
   * Background images
   * Player's flight(controller)
   * All other player's flights (enemies)
   * All bullets 
-* Implement 60 FPS by **JavaScript `setInterval()`**.
+* Implementing 60 FPS by **JavaScript `setInterval()`**
 
 > Client will render player's flight according to the latest player data in client for ***making sure player's flight moving smoothly***. 
 
 ### Server Side
-* Transport game data by **Socket.IO** server.
+* Transporting game data by **Socket.IO** server
   * Players data
   * Leaderboard 
   * Bullets data
-* Implement fixed server updating frequency by **JavaScript `setInterval()`**.
+* Implementing fixed server updating frequency by **JavaScript `setInterval()`**
 
 > In order to decrease unnecessary packets transporting, the game data will broadcast after the ***"isPlayersInfoChanged" flag*** becoming ***true***. 
 
@@ -42,13 +42,13 @@ It's a project of remaking single player game "TeSyun99" and supporting multiple
 ![17TS99](https://user-images.githubusercontent.com/52148950/172580967-f7db2244-6051-4983-b928-38ab9e5e3db8.png)
 
 ### About Back-End
-* Monitor metrics from instances and auto scaling group by **AWS Cloudwatch**.
-* Horizontal scailing by **AWS Auto Scaling** based on AWS Cloudwatch alarms.
-  * Add 1 instance when CPU Utilization approachs to specified metrics of the original instance.
+* Monitoring metrics from instances and auto scaling group by **AWS Cloudwatch**
+* Horizontal scailing by **AWS Auto Scaling** based on AWS Cloudwatch alarms
+  * Adding 1 instance when CPU Utilization approachs to specified metrics of the original instance
   ![add](https://user-images.githubusercontent.com/52148950/173033486-d9eb81cc-6acc-4ed2-a238-c9d2549da0ce.JPG)
-  * Remove 1 instance when CPU Utilization approachs to specified metrics of an addtional instance scaled by auto scaling group.
-* Deploy application server by **Docker**.
-* Store member data by **MongoDB**.
-* Listen 80 & 443 for reverse proxy by **Nginx**.
-* Authenticate member state by **JWT**.
-* Improve application availability and responsiveness by **AWS Load Balancer**.
+  * Removing 1 instance when CPU Utilization approachs to specified metrics of an addtional instance scaled by auto scaling group
+* Deploying application server by **Docker**
+* Storing member data by **MongoDB**
+* Listening 80 & 443 for reverse proxy by **Nginx**
+* Authenticating member state by **JWT**
+* Improving application availability and responsiveness by **AWS Load Balancer**
