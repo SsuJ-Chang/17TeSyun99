@@ -7,7 +7,7 @@ It's a project of remaking single player game "TeSyun99" and supporting multiple
 * Player will get a rating when game over.  
 ![tr](https://user-images.githubusercontent.com/52148950/172999958-b80e4cb7-7578-4679-a613-57476bdd33e6.png)
 * **In 17TeSyun99, player should dodge other player's flight and random moving bullets.**
-![TS01](https://user-images.githubusercontent.com/52148950/173000796-88564147-1fd7-4495-9b6f-89ce869440f1.JPG)
+![TS02](https://user-images.githubusercontent.com/52148950/173041574-525636a7-e460-4c6a-8f31-957206fd2ee5.JPG)
 
 ## Core Features
 * Multiple Playes Online Game
