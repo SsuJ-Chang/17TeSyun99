@@ -9,7 +9,7 @@ It's a project of remaking single player game "TeSyun99" and supporting multiple
 * **In 17TeSyun99, player should dodge other player's flight and random moving bullets.**
 ![TS01](https://user-images.githubusercontent.com/52148950/173000796-88564147-1fd7-4495-9b6f-89ce869440f1.JPG)
 
-## Core Feature
+## Core Features
 * Multiple Playes Online Game
 * Chatroom
 
