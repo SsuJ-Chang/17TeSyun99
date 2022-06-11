@@ -54,6 +54,6 @@ Welcome to try this game!
   * Removing 1 instance when CPU Utilization approachs to specified metrics of an addtional instance scaled by auto scaling group
 * Deploying application server by **Docker**
 * Storing member data by **MongoDB**
-* Listening 80 & 443 for reverse proxy by **Nginx**
+* Listening port 80 & 443 for reverse proxy by **Nginx**
 * Authenticating member state by **JWT**
 * Improving application availability and responsiveness by **AWS Load Balancer**
