@@ -2,11 +2,16 @@
 It's a project of remaking single player game "TeSyun99" and supporting multiple players online.
 ![17特訓99](https://user-images.githubusercontent.com/52148950/172580670-cd6a5277-5ef2-420a-8747-f3a1f4c1014c.JPG)
 
+Welcome to try this game!
+|Account|Password|
+|---|---|
+|test@test|test|
+
 ## What is TeSyun99
-* A classic litte game which player controls a flight dodging all direction random moving bullets.
+* A classic game in which the player controls a spaceship and needs to  dodge bullets coming from all directions.
 * Player will get a rating when game over.  
 ![tr](https://user-images.githubusercontent.com/52148950/172999958-b80e4cb7-7578-4679-a613-57476bdd33e6.png)
-* **In 17TeSyun99, player should dodge other player's flight and random moving bullets.**
+* **In 17TeSyun99, the player should dodge other players' spaceships and dodge bullets flying around the screen.**
 ![TS02](https://user-images.githubusercontent.com/52148950/173041574-525636a7-e460-4c6a-8f31-957206fd2ee5.JPG)
 
 ## Core Features
@@ -22,12 +27,12 @@ It's a project of remaking single player game "TeSyun99" and supporting multiple
 * Transporting player data by **Socket.IO** client
 * Rendering game view by **HTML5 Canvas API**
   * Background images
-  * Player's flight(controller)
-  * All other player's flights (enemies)
+  * Player's spaceship (controller)
+  * All other player's spaceships (enemies)
   * All bullets 
 * Implementing 60 FPS by **JavaScript `setInterval()`**
 
-> Client will render player's flight according to the latest player data in client for ***making sure player's flight moving smoothly***. 
+> Client will render player's spaceship according to the latest player data in client for ***making sure player's spaceship moving smoothly***. 
 
 ### Server Side
 * Transporting game data by **Socket.IO** server
