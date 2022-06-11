@@ -1,7 +1,7 @@
-// const domain = "http://52.7.185.223:3099";
-const domain = "http://localhost:3099";
-const socket = io(`${domain}`, {'transports': ['websocket', "polling"]}); // 直接指定以 websocket 連線
-// const socket = io(); // 一般連線 會先以 http 為主
+const domain = "http://52.7.185.223:3099";
+// const domain = "http://localhost:3099";
+// const socket = io(`${domain}`, {'transports': ['websocket']}); // 直接指定以 websocket 連線
+const socket = io(); // 一般連線 會先以 http 為主
 
 // 玩家資訊
 // let userName = document.getElementById('username-input'); // 無登入版
@@ -29,7 +29,6 @@ document.getElementById('play-button').addEventListener('click', function(e) {
             me.x = x;
             y = getRandom(100, 500);
             me.y = y;
-            // console.log('輸入名稱', userName.value);
             // me.name = userName.value;
             me.name = userName;
             if(me.name === "阿傑" || me.name === "暗樁一號" || me.name === "暗樁二號"){
@@ -44,7 +43,7 @@ document.getElementById('play-button').addEventListener('click', function(e) {
             }else{
                 me.color = `#${color}`;
             }
-            console.log('登入玩家資訊', me);
+            // console.log('登入玩家資訊', me);
             document.getElementById('play-menu').classList.add('hidden');
             document.getElementById('my-scores-title').classList.remove('hidden');
             document.getElementById('leaderboard').classList.remove('hidden');
@@ -80,11 +79,10 @@ document.getElementById('talk-button').addEventListener('click', function(e) {
     //     if(/^[\u4E00-\u9FD50-9A-Za-z_]{1,8}$/i.test(userName.value)){
     if(userName){
             me.type = 1;
-            // console.log('輸入名稱', userName.value);
             // me.name = userName.value;
             me.name = userName;
             me.color = '#aaa';
-            console.log('登入純聊天者資訊', me);
+            // console.log('登入純聊天者資訊', me);
             document.getElementById('play-menu').classList.add('hidden');
             document.getElementById('leaderboard').classList.remove('hidden');
             socket.emit('talkerInit', me);
