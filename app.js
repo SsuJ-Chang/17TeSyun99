@@ -25,7 +25,7 @@ app.get('/', (req, res)=>{  // 首頁 / 登入畫面
 
 app.get('/api/member', (req, res) => { // API 取得會員狀態
     const cookie = req.headers.cookie;
-    if(cookie !== undefined){
+    if(cookie.includes('JWT=')){
         try{
             const value = cookie.split('JWT=')[1];
             const token = jwt.verify(value, process.env.TOKEN_SECRET)
@@ -33,7 +33,7 @@ app.get('/api/member', (req, res) => { // API 取得會員狀態
             res.status(200).json({'ok':true, 'nickname':token.nickname});
         }catch(error){
             console.log('錯誤！ ', error);
-            res.status(403).json({"error": true, "message": "訪問權限不足"});
+            res.status(500).json({"error": true, "message": "伺服器內部錯誤"});
         }
     }else{
         res.status(200).json({'ok':false});
