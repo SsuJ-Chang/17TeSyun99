@@ -25,9 +25,11 @@ app.get('/', (req, res)=>{  // 首頁 / 登入畫面
 
 app.get('/api/member', (req, res) => { // API 取得會員狀態
     const cookie = req.headers.cookie;
+    console.log('all cookie: ', cookie);
     if(cookie.includes('JWT=')){
         try{
-            const value = cookie.split('JWT=')[1];
+            const value = cookie.split('JWT=')[1].split(';')[0];
+            console.log('JWT value', value);
             const token = jwt.verify(value, process.env.TOKEN_SECRET)
             console.log('JWT結果', token.nickname);
             res.status(200).json({'ok':true, 'nickname':token.nickname});
