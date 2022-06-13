@@ -8,10 +8,9 @@ Welcome to try this game!
 |test@test|test|
 
 ## What is TeSyun99
-* A classic game in which the player controls a spaceship and needs to  dodge bullets coming from all directions.
-* Player will get a rating when game over.  
+* A classic game in which the player controls a ball-ship and needs to  dodge bullets coming from all directions. 
 ![tr](https://user-images.githubusercontent.com/52148950/172999958-b80e4cb7-7578-4679-a613-57476bdd33e6.png)
-* **In 17TeSyun99, the player should dodge other players' spaceships and dodge bullets flying around the screen.**
+* **In 17TeSyun99, the player should dodge other players' ball-ships and dodge bullets flying around the screen.**
 ![TS02](https://user-images.githubusercontent.com/52148950/173041574-525636a7-e460-4c6a-8f31-957206fd2ee5.JPG)
 
 ## Core Features
@@ -27,12 +26,12 @@ Welcome to try this game!
 * Transporting player data by **Socket.IO** client
 * Rendering game view by **HTML5 Canvas API**
   * Background images
-  * Player's spaceship (controller)
-  * All other player's spaceships (enemies)
+  * Player's ball-ship (controller)
+  * All other player's ball-ships (enemies)
   * All bullets 
 * Implementing 60 FPS by **JavaScript `setInterval()`**
 
-> Client will render player's spaceship according to the latest player data in client for ***making sure player's spaceship moving smoothly***. 
+> Client will render player's ball-ship according to the latest player data in client for ***making sure player's ball-ship moving smoothly***. 
 
 ### Server Side
 * Transporting game data by **Socket.IO** server
