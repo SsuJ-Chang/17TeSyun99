@@ -1,6 +1,6 @@
 # [17TeSyun99 (17特訓99)](https://17tesyun99.rj728web.fun/)
 It's a project of remaking single player game "TeSyun99" and supporting multiple players online.
-![17特訓99](https://user-images.githubusercontent.com/52148950/172580670-cd6a5277-5ef2-420a-8747-f3a1f4c1014c.JPG)
+![17特訓99](https://user-images.githubusercontent.com/52148950/173297512-9e0e6cfb-abe1-40b6-b066-5d572327d52d.JPG)
 
 Welcome to try this game!
 |Account|Password|
