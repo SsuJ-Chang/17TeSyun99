@@ -3,10 +3,20 @@ It's a project of remaking single player game "TeSyun99" and supporting multiple
 ![17特訓99](https://user-images.githubusercontent.com/52148950/173297512-9e0e6cfb-abe1-40b6-b066-5d572327d52d.JPG)
 
 Welcome to try this game!
+
 Website URL: https://17tesyun99.rj728web.fun/
 |Account|Password|
 |---|---|
 |test@test|test|
+
+## Catalog
+* [What is TeSyun99](#what-is-tesyun99)
+* [Core Features](#core-features)
+* [Language](#language)
+* [How to implement gameplay mechanics](#how-to-implement-gameplay-mechanics)
+* [Backend Architecture](#backend-architecture)
+* [About Backend](about-backend)
+* [Contact](about-backend)
 
 ## What is TeSyun99
 * A classic game in which the player controls a ball-ship and needs to  dodge bullets coming from all directions. 
