@@ -15,7 +15,6 @@ Website URL: https://17tesyun99.rj728web.fun/
 * [Language](#language)
 * [How to implement gameplay mechanics](#how-to-implement-gameplay-mechanics)
 * [Backend Architecture](#backend-architecture)
-* [About Backend](about-backend)
 * [Contact](about-backend)
 
 ## What is TeSyun99
