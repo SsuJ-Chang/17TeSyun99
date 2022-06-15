@@ -15,7 +15,7 @@ Website URL: https://17tesyun99.rj728web.fun/
 * [Language](#language)
 * [How to implement gameplay mechanics](#how-to-implement-gameplay-mechanics)
 * [Backend Architecture](#backend-architecture)
-* [Contact](about-backend)
+* [Contact](#contact)
 
 ## What is TeSyun99
 * A classic game in which the player controls a ball-ship and needs to  dodge bullets coming from all directions. 
