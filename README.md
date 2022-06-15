@@ -59,3 +59,8 @@ Website URL: https://17tesyun99.rj728web.fun/
 * Listening port 80 & 443 for reverse proxy by **Nginx**
 * Authenticating member state by **JWT**
 * Improving application availability and responsiveness by **AWS Load Balancer**
+
+### Contact
+👨🏻‍💻 章思傑 Anfer Chang
+
+📬 Email: loch0728@gmail.com
