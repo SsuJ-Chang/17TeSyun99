@@ -41,6 +41,7 @@ Welcome to try this game!
 * Implementing fixed server updating frequency by **JavaScript `setInterval()`**
 
 > In order to decrease unnecessary packets transporting, the game data will broadcast after the ***`isPlayersInfoChanged` flag*** becoming ***true***. 
+
 ![game_sync](https://user-images.githubusercontent.com/52148950/173422891-aa073f7b-2d68-49d3-86b5-0aa1507e8902.png)
 
 ## Back-End Architecture
