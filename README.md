@@ -20,7 +20,7 @@ Website URL: https://17tesyun99.rj728web.fun/
 
 ## Language
 * Frontend: Javascript
-* Backend: Node.js & Express.js
+* Backend: Node.js
 
 ## How to implement gameplay mechanics 
 ### Client Side
