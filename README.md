@@ -49,7 +49,7 @@ Welcome to try this game!
 
 ### About Back-End
 * Monitoring metrics from instances and auto scaling group by **AWS Cloudwatch**
-* Horizontal scailing by **AWS Auto Scaling** based on AWS Cloudwatch alarms
+* Horizontal scailing by **AWS Auto Scaling** based on **AWS Cloudwatch Alarms**
   * Adding 1 instance when CPU Utilization approachs to specified metrics of the original instance
   ![add](https://user-images.githubusercontent.com/52148950/173033486-d9eb81cc-6acc-4ed2-a238-c9d2549da0ce.JPG)
   * Removing 1 instance when CPU Utilization approachs to specified metrics of an addtional instance scaled by auto scaling group
