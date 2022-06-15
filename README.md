@@ -18,8 +18,8 @@ Welcome to try this game!
 * Chatroom
 
 ## Language
-* Front-End: Javascript
-* Back-End: Node.js & Express.js
+* Frontend: Javascript
+* Backend: Node.js & Express.js
 
 ## How to implement gameplay mechanics 
 ### Client Side
@@ -36,7 +36,7 @@ Welcome to try this game!
 ### Server Side
 * Transporting game data by **Socket.IO** server
   * Players data
-  * Leaderboard 
+  * Leaderboard
   * Bullets data
 * Implementing fixed server updating frequency by **JavaScript `setInterval()`**
 
@@ -44,10 +44,10 @@ Welcome to try this game!
 
 ![game_sync](https://user-images.githubusercontent.com/52148950/173422891-aa073f7b-2d68-49d3-86b5-0aa1507e8902.png)
 
-## Back-End Architecture
+## Backend Architecture
 ![17TS99](https://user-images.githubusercontent.com/52148950/172580967-f7db2244-6051-4983-b928-38ab9e5e3db8.png)
 
-### About Back-End
+### About Backend
 * Monitoring metrics from instances and auto scaling group by **AWS Cloudwatch**
 * Horizontal scailing by **AWS Auto Scaling** based on **AWS Cloudwatch Alarms**
   * Adding 1 instance when CPU Utilization approachs to specified metrics of the original instance
