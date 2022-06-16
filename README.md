@@ -22,7 +22,7 @@ Website URL: https://17tesyun99.rj728web.fun/
 * A classic game in which the player controls a spaceship and needs to dodge bullets coming from all directions. 
 ![99](https://user-images.githubusercontent.com/52148950/174002906-50432d08-3da6-4d2a-9c49-daee2bd885de.gif)
 * In 17TeSyun99, the player should dodge other players' ball-ships and dodge bullets flying around the screen.
-![TS02](https://user-images.githubusercontent.com/52148950/173041574-525636a7-e460-4c6a-8f31-957206fd2ee5.JPG)
+![1799-concept](https://user-images.githubusercontent.com/52148950/174010579-0031bf84-2a5b-42d3-8fa9-66a4eab6dd97.gif)
 
 ## Core Features
 * Multiple Player Online Game
@@ -68,6 +68,8 @@ Website URL: https://17tesyun99.rj728web.fun/
 > In order to decrease unnecessary packets transporting, the game data will broadcast after the ***`isPlayersInfoChanged` flag*** becoming ***true***. 
 
 ![game_sync](https://user-images.githubusercontent.com/52148950/173422891-aa073f7b-2d68-49d3-86b5-0aa1507e8902.png)
+
+![1799-multi](https://user-images.githubusercontent.com/52148950/174009690-de5794da-b1e2-40e6-93b1-04e19d050d76.gif)
 
 ## Application Server Auto Scaling
 * Monitoring metrics from instances and auto scaling group by **AWS Cloudwatch**
