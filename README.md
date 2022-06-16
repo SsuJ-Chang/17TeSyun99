@@ -1,6 +1,6 @@
 # [17TeSyun99 (17特訓99)](https://17tesyun99.rj728web.fun/)
-It's a project of remaking single player game "TeSyun99" and supporting multiple players online.
-![17特訓99](https://user-images.githubusercontent.com/52148950/173297512-9e0e6cfb-abe1-40b6-b066-5d572327d52d.JPG)
+It's a project of remaking single player game "特訓99" and supporting multiple players online.
+![1799index](https://user-images.githubusercontent.com/52148950/173866710-7f7c1654-2df8-49ae-b114-a5b9823e0c34.gif)
 
 Welcome to try this game!
 
@@ -12,24 +12,33 @@ Website URL: https://17tesyun99.rj728web.fun/
 ## Catalog
 * [What is TeSyun99](#what-is-tesyun99)
 * [Core Features](#core-features)
-* [Language](#language)
+* [Tech Stacks](#tech-stacks)
 * [How to implement gameplay mechanics](#how-to-implement-gameplay-mechanics)
 * [Backend Architecture](#backend-architecture)
 * [Contact](#contact)
 
-## What is TeSyun99
-* A classic game in which the player controls a ball-ship and needs to  dodge bullets coming from all directions. 
+## What is 特訓99
+* A classic game in which the player controls a spaceship and needs to dodge bullets coming from all directions. 
 ![tr](https://user-images.githubusercontent.com/52148950/172999958-b80e4cb7-7578-4679-a613-57476bdd33e6.png)
-* **In 17TeSyun99, the player should dodge other players' ball-ships and dodge bullets flying around the screen.**
+* In 17TeSyun99, the player should dodge other players' ball-ships and dodge bullets flying around the screen.
 ![TS02](https://user-images.githubusercontent.com/52148950/173041574-525636a7-e460-4c6a-8f31-957206fd2ee5.JPG)
 
 ## Core Features
-* Multiple Playes Online Game
+* Multiple Player Online Game
 * Chatroom
 
-## Language
-* Frontend: Javascript
-* Backend: Node.js
+## Tech Stack
+### Frontend
+* JavaScript
+* HTML5 Canvas API
+### Backend
+* Node.js
+* Express.js
+* Socket.IO
+* Docker
+* AWS EC2, Load Balancing, Cloudwatch, Auto Scaling
+* JSON Web Token(JWT)
+* MongoDB
 
 ## How to implement gameplay mechanics 
 ### Client Side
@@ -39,9 +48,10 @@ Website URL: https://17tesyun99.rj728web.fun/
   * Player's ball-ship (controller)
   * All other player's ball-ships (enemies)
   * All bullets 
-* Implementing 60 FPS by **JavaScript `setInterval()`**
-
+* Implementing 60 FPS by **JavaScript `setInterval()`** without 3rd party lirbraries or engines
 > Client will render player's ball-ship according to the latest player data in client for ***making sure player's ball-ship moving smoothly***. 
+
+![client_moving](https://user-images.githubusercontent.com/52148950/173869033-508bc3ac-2780-4239-b5a4-c18ac708bbb2.gif)
 
 ### Server Side
 * Transporting game data by **Socket.IO** server
@@ -55,17 +65,19 @@ Website URL: https://17tesyun99.rj728web.fun/
 ![game_sync](https://user-images.githubusercontent.com/52148950/173422891-aa073f7b-2d68-49d3-86b5-0aa1507e8902.png)
 
 ## Backend Architecture
-![17TS99](https://user-images.githubusercontent.com/52148950/172580967-f7db2244-6051-4983-b928-38ab9e5e3db8.png)
+![17TS99架構圖](https://user-images.githubusercontent.com/52148950/173862434-078968f6-ae41-4a72-8c3d-b044ca311f61.png)
 
-### About Backend
+### Auto Scaling
 * Monitoring metrics from instances and auto scaling group by **AWS Cloudwatch**
-* Horizontal scailing by **AWS Auto Scaling** based on **AWS Cloudwatch Alarms**
+* Horizontal scaling by **AWS Auto Scaling** based on **AWS Cloudwatch Alarms**
   * Adding 1 instance when CPU Utilization approachs to specified metrics of the original instance
   ![add](https://user-images.githubusercontent.com/52148950/173033486-d9eb81cc-6acc-4ed2-a238-c9d2549da0ce.JPG)
   * Removing 1 instance when CPU Utilization approachs to specified metrics of an addtional instance scaled by auto scaling group
+
+### Backend Techniques
 * Deploying application server by **Docker**
 * Storing member data by **MongoDB**
-* Listening port 80 & 443 for reverse proxy by **Nginx**
+* Listening port 443 for reverse proxy by **Nginx**
 * Authenticating member state by **JWT**
 * Improving application availability and responsiveness by **AWS Load Balancer**
 
