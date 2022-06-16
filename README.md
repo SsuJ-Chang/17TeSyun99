@@ -15,7 +15,7 @@ Website URL: https://17tesyun99.rj728web.fun/
 * [Tech Stack](#tech-stack)
 * [Backend Architecture](#backend-architecture)
 * [How to Implement Gameplay Mechanics](#how-to-implement-gameplay-mechanics)
-* [Application Server Auto Scaling](#application-server-auto-scaling)
+* [Server Auto Scaling](#server-auto-scaling)
 * [Contact](#contact)
 
 ## What is 特訓99
@@ -71,7 +71,7 @@ Website URL: https://17tesyun99.rj728web.fun/
 
 ![1799-multi](https://user-images.githubusercontent.com/52148950/174009690-de5794da-b1e2-40e6-93b1-04e19d050d76.gif)
 
-## Application Server Auto Scaling
+## Server Auto Scaling
 * Monitoring metrics from instances and auto scaling group by **AWS Cloudwatch**
 * Horizontal scaling by **AWS Auto Scaling** based on **AWS Cloudwatch Alarms**
   * Adding 1 instance when CPU Utilization approachs to specified metrics of the original instance
