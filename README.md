@@ -37,7 +37,7 @@ Website URL: https://17tesyun99.rj728web.fun/
 * Express.js
 * Socket.IO
 * Docker
-* AWS EC2, Load Balancing, CloudWatch, Auto Scaling
+* AWS EC2, Load Balancer, CloudWatch, Auto Scaling
 * JSON Web Token(JWT)
 * Nginx
 * MongoDB
