@@ -1,5 +1,5 @@
 # [17TeSyun99 (17特訓99)](https://17tesyun99.rj728web.fun/)
-It's a project of remaking single player game "特訓99" and supporting multiple players enjoying together online.
+It's a project of remaking single player game "特訓99" and supporting multiple players enjoying this game together online.
 ![1799index](https://user-images.githubusercontent.com/52148950/173866710-7f7c1654-2df8-49ae-b114-a5b9823e0c34.gif)
 
 Welcome to try this game!
